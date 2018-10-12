@@ -11,17 +11,17 @@ public  class QuitDriver  {
 	public static void quitDriver(){
 		System.out.println("呼叫到quitDriver()");
 		
-		//關掉driver
-		DriverFactory.getDriver().quit();
+//		//關掉driver
+//		DriverFactory.getDriver().quit();
 		
 		System.out.println("己關閉瀏覽器");
 	}
 	
 	public static void closeDriver(){
-		System.out.println("呼叫到closeDriver()");
-		
-		//關掉瀏覽器
-		DriverFactory.getDriver().close();
+//		System.out.println("呼叫到closeDriver()");
+//		
+//		//關掉瀏覽器
+//		DriverFactory.getDriver().close();
 		
 		System.out.println("己關閉瀏覽器");
 	}	

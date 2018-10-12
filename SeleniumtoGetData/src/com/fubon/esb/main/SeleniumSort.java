@@ -27,21 +27,21 @@ public class SeleniumSort {
 				// 登入NSP
 				Login.loginWEB();
 				 
-				QuitDriver.quitDriver();
-				 
-				System.out.println(DateUtil.SetTime());
+//				QuitDriver.quitDriver();
+//				 
+//				System.out.println(DateUtil.SetTime());
 				 
 			} catch (Exception e) {				
 				e.printStackTrace();
 
 				System.out.println("***********************************************************");				
-				Thread.sleep(2000);
-				//關閉網頁
-				QuitDriver.quitDriver();
-				//全部設定重製
-				DriverFactory.setAllNull();	
+//				Thread.sleep(2000);
+//				//關閉網頁
+//				QuitDriver.quitDriver();
+//				//全部設定重製
+//				DriverFactory.setAllNull();	
 			}
-				System.out.println("程式結束");				
+//				System.out.println("程式結束");				
 				System.out.println("===========================================================");
 
 		
