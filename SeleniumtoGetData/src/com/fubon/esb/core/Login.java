@@ -64,7 +64,7 @@ public class Login {
 					Thread.sleep(60 * 1000); // 设置暂停的时间 5 秒
 					count++;
 					System.out.println(sdf.format(new Date()) + "--循环执行第" + count + "次");
-					if (count == 3) {
+					if (count == 1440) {
 						result = true;
 						break;
 					}
@@ -73,13 +73,7 @@ public class Login {
 				}
 			}
 
-			// 參考
-//			WebElement IndexButton = DriverFactory.getWait().until(ExpectedConditions.visibilityOfElementLocated(By
-//					.xpath("//*[@id='nav']/li[1]/a")));
-//			
-//			
-//			DriverFactory.getDriver().findElement(By
-//					.xpath("//*[@id='nav']/li[1]/a"));
+
 
 			Thread.sleep(1000);
 
