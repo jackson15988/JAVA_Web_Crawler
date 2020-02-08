@@ -23,7 +23,7 @@ public class DriverFactory {
 		if (driver == null) {
 			
 			System.out.println("呼叫到DriverSet()");
-			System.setProperty("webdriver.chrome.driver","C:\\\\Users/IMI-JAVA-Ryan/Desktop/chromedriver.exe");
+			System.setProperty("webdriver.chrome.driver","C:\\\\Users/admin/Desktop/chromedriver.exe");
 			// 螢幕設定
 //			ChromeOptions options = new ChromeOptions();
 //			options.addArguments("test-type");
