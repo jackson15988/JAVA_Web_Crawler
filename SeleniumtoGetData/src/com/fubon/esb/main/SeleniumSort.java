@@ -22,10 +22,8 @@ public class SeleniumSort {
 		
 			try {	
 				
-				//Selenium
-				System.out.println(DateUtil.SetTime());
-				// 登入NSP
-				Login.loginWEB();
+//			
+//				Login.loginWEB();
 				 
 //				QuitDriver.quitDriver();
 //				 
