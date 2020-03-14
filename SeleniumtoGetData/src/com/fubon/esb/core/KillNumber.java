@@ -10,8 +10,8 @@ public class KillNumber {
 	public static void main(String args[]) {
 
 		// one missing number
-		ArrayList<Integer> ex = escapeNumber(6);
-		System.out.println("取回的下單號碼" +  ex);
+		ArrayList<Integer> ex = escapeNumber(7);
+		System.out.println("取回的下單號碼" + ex);
 		ex = fetchTripsCar(ex);
 		System.out.println("進行擷取優化之後");
 		System.out.println(ex);
@@ -28,6 +28,13 @@ public class KillNumber {
 //		int[] iArray = new int[] { 1, 2, 3, 5 };
 //		int missing = getMissingNumber(iArray, 5);
 //		System.out.printf("Missing number in array %s is %d %n", Arrays.toString(iArray), missing);
+	}
+
+	public static ArrayList<Integer> getNextBetNumber(Integer keyNumber) {
+		ArrayList<Integer> resultNo = escapeNumber(keyNumber);
+		resultNo = fetchTripsCar(resultNo);
+		return resultNo;
+
 	}
 
 	public static ArrayList<Integer> fetchTripsCar(ArrayList<Integer> escapeNumber) {

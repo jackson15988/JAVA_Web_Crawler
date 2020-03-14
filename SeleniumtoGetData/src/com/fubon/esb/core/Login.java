@@ -28,10 +28,12 @@ public class Login {
 
 	// 上一期間開號碼
 	private static ArrayList<String> lastDrawNumber = new ArrayList<>();
-	// 上一期預測號碼
-	private static ArrayList<String> LastIssueForecastNumber = new ArrayList<>();
+	// 預測號碼
+	private static ArrayList<Integer> issueForecastNumber = new ArrayList<>();
 	// 加碼次數
 	private static Integer overweightCount = 0;
+
+	private static int bitMoney[] = { 10, 20, 40, 80, 160, 320, 640, 1310 };
 
 	// 是否開啟測試功能
 	private static boolean isTest = true;
@@ -107,10 +109,10 @@ public class Login {
 						String[] timelist = time.split(":");
 						String realtime = timelist[1];
 
-						if (true) {
+						if (Integer.valueOf(realtime) % 5 == 0) {
 							try {
-								System.out.println("先等待40秒");
-//								Thread.sleep(40 * 1000);
+								System.out.println("先等待30秒!!!．．．．．");
+								Thread.sleep(30 * 1000);
 
 								if (!WhetherSeal.equals("已封盤")) {
 
@@ -151,78 +153,124 @@ public class Login {
 										Integer keyTrips = determineCar(thisPeriodNumber.get(0));
 										System.out.println("取得上一次開獎結果: " + thisPeriodNumber);
 										System.out.println("取得關鍵車次: 第幾車獲得第一名:" + keyTrips);
-
+										System.out.print(
+												"車次所在中獎關鍵號碼為:" + thisPeriodNumber.get(Integer.valueOf(keyTrips) - 1));
+										String winningTripNumber = thisPeriodNumber.get(Integer.valueOf(keyTrips) - 1);
 										boolean whetherWin = false;
-										if (LastIssueForecastNumber.size() != 0) {
-											for (String checkWinNo : LastIssueForecastNumber) {
-												// 處理有中獎區塊
-												if (checkWinNo.contains(String.valueOf(keyTrips))) {
+										if (issueForecastNumber.size() != 0) {
+											// issueForecastNumber 代表每次近來 也承接上一期塞入的結果
+											for (Integer checkWinNo : issueForecastNumber) {
+												// 處理有中獎區塊 則不進行加碼
+												if (checkWinNo == keyTrips) {
 													whetherWin = true;
 													overweightCount = 0;
 												}
 											}
 											if (!whetherWin) {
-												// 沒有中獎的情況之下 必須要 +1
+												// 沒有中獎的情況之下 必須要 +1 因為要進行加碼
+												System.out.println("掛!!!!---- 進行一次加碼");
 												overweightCount += 1;
 											}
-											//處理下一期間預測結果
-											
-											//以下 else 等於 size等於 0剛進入時候
+											// 處理下一期間預測結果
+											issueForecastNumber.clear(); // 保守起見 先進行清空處理
+											issueForecastNumber = KillNumber
+													.getNextBetNumber(Integer.valueOf(winningTripNumber));
+											System.out.println("取得預測號碼:" + issueForecastNumber);
+											// 以下 else 等於 size等於 0剛進入時候
 										} else {
-											//處理下一期間預測結果
+											// 處理下一期間預測結果
+											issueForecastNumber.clear(); // 保守起見 先進行清空處理
+											overweightCount = 0;
+
+											issueForecastNumber = KillNumber
+													.getNextBetNumber(Integer.valueOf(winningTripNumber));
+											System.out.println("取得預測號碼:" + issueForecastNumber);
 										}
 
 									} catch (IOException e) {
-										// TODO Auto-generated catch block
-										e.printStackTrace();
+										System.out.println("系統發生錯誤" + e);
 									}
 
 //									if (result.get(2).toString().trim().equals("1")) {
 //										System.out.print("第一名冠軍");
 //									}
-									DriverFactory.getDriver().findElement(By.xpath(
-											"//*[@id='betWrapper']/div[2]/div/div[1]/div[2]/div/div[1]/table[1]/tbody/tr[1]/td[3]/input"))
-											.sendKeys("10");
 
-									DriverFactory.getDriver().findElement(By.xpath(
-											"//*[@id='betWrapper']/div[2]/div/div[1]/div[2]/div/div[1]/table[1]/tbody/tr[2]/td[3]/input"))
-											.sendKeys("20");
-									DriverFactory.getDriver().findElement(By.xpath(
-											"//*[@id='betWrapper']/div[2]/div/div[1]/div[2]/div/div[1]/table[1]/tbody/tr[3]/td[3]/input"))
-											.sendKeys("30");
-									DriverFactory.getDriver().findElement(By.xpath(
-											"//*[@id='betWrapper']/div[2]/div/div[1]/div[2]/div/div[1]/table[1]/tbody/tr[4]/td[3]/input"))
-											.sendKeys("40");
-									DriverFactory.getDriver().findElement(By.xpath(
-											"//*[@id='betWrapper']/div[2]/div/div[1]/div[2]/div/div[1]/table[1]/tbody/tr[5]/td[3]/input"))
-											.sendKeys("50");
-									DriverFactory.getDriver().findElement(By.xpath(
-											"//*[@id='betWrapper']/div[2]/div/div[1]/div[2]/div/div[1]/table[1]/tbody/tr[6]/td[3]/input"))
-											.sendKeys("60");
-									DriverFactory.getDriver().findElement(By.xpath(
-											"//*[@id='betWrapper']/div[2]/div/div[1]/div[2]/div/div[1]/table[1]/tbody/tr[7]/td[3]/input"))
-											.sendKeys("70");
-									DriverFactory.getDriver().findElement(By.xpath(
-											"//*[@id='betWrapper']/div[2]/div/div[1]/div[2]/div/div[1]/table[1]/tbody/tr[8]/td[3]/input"))
-											.sendKeys("80");
-									DriverFactory.getDriver().findElement(By.xpath(
-											"//*[@id='betWrapper']/div[2]/div/div[1]/div[2]/div/div[1]/table[1]/tbody/tr[9]/td[3]/input"))
-											.sendKeys("90");
-									DriverFactory.getDriver().findElement(By.xpath(
-											"//*[@id='betWrapper']/div[2]/div/div[1]/div[2]/div/div[1]/table[1]/tbody/tr[10]/td[3]/input"))
-											.sendKeys("100");
+									Thread.sleep(3000);
+									int bitOrderMoney = bitMoney[overweightCount];
+									String bitOrderMoneyStr = String.valueOf(bitOrderMoney);
+									for (Integer bitNo : issueForecastNumber) {
+										switch (bitNo) {
+										case 1:
+											DriverFactory.getDriver().findElement(By.xpath(
+													"//*[@id='betWrapper']/div[2]/div/div[1]/div[2]/div/div[1]/table[1]/tbody/tr[1]/td[3]/input"))
+													.sendKeys(bitOrderMoneyStr);
+											break;
+										case 2:
+											DriverFactory.getDriver().findElement(By.xpath(
+													"//*[@id='betWrapper']/div[2]/div/div[1]/div[2]/div/div[1]/table[1]/tbody/tr[2]/td[3]/input"))
+													.sendKeys(bitOrderMoneyStr);
+											break;
+										case 3:
+											DriverFactory.getDriver().findElement(By.xpath(
+													"//*[@id='betWrapper']/div[2]/div/div[1]/div[2]/div/div[1]/table[1]/tbody/tr[3]/td[3]/input"))
+													.sendKeys(bitOrderMoneyStr);
+											break;
+										case 4:
+											DriverFactory.getDriver().findElement(By.xpath(
+													"//*[@id='betWrapper']/div[2]/div/div[1]/div[2]/div/div[1]/table[1]/tbody/tr[4]/td[3]/input"))
+													.sendKeys(bitOrderMoneyStr);
+											break;
+										case 5:
+											DriverFactory.getDriver().findElement(By.xpath(
+													"//*[@id='betWrapper']/div[2]/div/div[1]/div[2]/div/div[1]/table[1]/tbody/tr[5]/td[3]/input"))
+													.sendKeys(bitOrderMoneyStr);
+											break;
+										case 6:
+											DriverFactory.getDriver().findElement(By.xpath(
+													"//*[@id='betWrapper']/div[2]/div/div[1]/div[2]/div/div[1]/table[1]/tbody/tr[6]/td[3]/input"))
+													.sendKeys(bitOrderMoneyStr);
+											break;
+										case 7:
+											DriverFactory.getDriver().findElement(By.xpath(
+													"//*[@id='betWrapper']/div[2]/div/div[1]/div[2]/div/div[1]/table[1]/tbody/tr[7]/td[3]/input"))
+													.sendKeys(bitOrderMoneyStr);
+											break;
+										case 8:
+											DriverFactory.getDriver().findElement(By.xpath(
+													"//*[@id='betWrapper']/div[2]/div/div[1]/div[2]/div/div[1]/table[1]/tbody/tr[8]/td[3]/input"))
+													.sendKeys(bitOrderMoneyStr);
+											break;
+										case 9:
+											DriverFactory.getDriver().findElement(By.xpath(
+													"//*[@id='betWrapper']/div[2]/div/div[1]/div[2]/div/div[1]/table[1]/tbody/tr[9]/td[3]/input"))
+													.sendKeys(bitOrderMoneyStr);
+											break;
+										case 10:
+											DriverFactory.getDriver().findElement(By.xpath(
+													"//*[@id='betWrapper']/div[2]/div/div[1]/div[2]/div/div[1]/table[1]/tbody/tr[10]/td[3]/input"))
+													.sendKeys(bitOrderMoneyStr);
+											break;
 
-									Thread.sleep(1000);
+										default:
+											break;
+										}
+
+									}
+
+									// 點即送出效果 先跳出懸浮視窗
+									Thread.sleep(500);
 									DriverFactory.getDriver()
 											.findElement(
-													By.xpath("//*[@id='betWrapper']/div[2]/div/div[1]/div[1]/div[1]"))
+													By.xpath("//*[@id='betWrapper']/div[2]/div/div[1]/div[3]/div[2]"))
 											.click();
-
-									Thread.sleep(1000);
+									
+									Thread.sleep(1500);
 									DriverFactory.getDriver()
-											.findElement(By.xpath(
-													"//*[@id='betWrapper']/div[2]/div/div[1]/div[4]/div/div[3]/div[1]"))
-											.click();
+									.findElement(
+											By.xpath("//*[@id='betWrapper']/div[2]/div/div[1]/div[4]/div/div[3]/div[1]"))
+									.click();
+									
+
 								}
 
 								Thread.sleep(60 * 1000);
@@ -287,25 +335,25 @@ public class Login {
 
 	public static Integer determineCar(String oneCar) {
 		Integer determineTrips = -1;
-		if (oneCar.contains("1")) {
+		if (oneCar.equals("01")) {
 			return determineTrips = 1;
-		} else if (oneCar.contains("2")) {
+		} else if (oneCar.equals("02")) {
 			return determineTrips = 2;
-		} else if (oneCar.contains("3")) {
+		} else if (oneCar.equals("03")) {
 			return determineTrips = 3;
-		} else if (oneCar.contains("4")) {
+		} else if (oneCar.equals("04")) {
 			return determineTrips = 4;
-		} else if (oneCar.contains("5")) {
+		} else if (oneCar.equals("05")) {
 			return determineTrips = 5;
-		} else if (oneCar.contains("6")) {
+		} else if (oneCar.equals("06")) {
 			return determineTrips = 6;
-		} else if (oneCar.contains("7")) {
+		} else if (oneCar.equals("07")) {
 			return determineTrips = 7;
-		} else if (oneCar.contains("8")) {
+		} else if (oneCar.equals("08")) {
 			return determineTrips = 8;
-		} else if (oneCar.contains("9")) {
+		} else if (oneCar.equals("09")) {
 			return determineTrips = 9;
-		} else if (oneCar.contains("10")) {
+		} else if (oneCar.equals("10")) {
 			return determineTrips = 10;
 		}
 		return determineTrips;
