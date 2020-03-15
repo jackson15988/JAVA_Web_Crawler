@@ -5,12 +5,14 @@ import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.BitSet;
 
+import com.fubon.esb.util.LineNotify;
+
 public class KillNumber {
 
 	public static void main(String args[]) {
 
 		// one missing number
-		ArrayList<Integer> ex = escapeNumber(7);
+		ArrayList<Integer> ex = escapeNumber(9);
 		System.out.println("取回的下單號碼" + ex);
 		ex = fetchTripsCar(ex);
 		System.out.println("進行擷取優化之後");
@@ -30,9 +32,14 @@ public class KillNumber {
 //		System.out.printf("Missing number in array %s is %d %n", Arrays.toString(iArray), missing);
 	}
 
-	public static ArrayList<Integer> getNextBetNumber(Integer keyNumber) {
+	public static ArrayList<Integer> getNextBetNumber(String webViewBeforeBitNumber, ArrayList<String> thisPeriodNumber,
+			Integer keyNumber) {
 		ArrayList<Integer> resultNo = escapeNumber(keyNumber);
 		resultNo = fetchTripsCar(resultNo);
+		System.out.println("猶道策略關鍵號碼:" + keyNumber);
+		System.out.println("猶道策略返回號碼:" + resultNo);
+		LineNotify.callEvent("63KkaFIQzJ8WE3J7pq2NR2mzowoDXDxM6rTfKJk5ok4", "取得上一期別:" + webViewBeforeBitNumber
+				+ " 取得上一次開獎號碼: " + thisPeriodNumber + "猶道策略關鍵號碼:" + keyNumber + " 猶道策略返回號碼:" + resultNo);
 		return resultNo;
 
 	}
