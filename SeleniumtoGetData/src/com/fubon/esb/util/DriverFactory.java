@@ -6,7 +6,6 @@ import java.util.ArrayList;
 
 import org.openqa.selenium.WebDriver;
 import org.openqa.selenium.chrome.ChromeDriver;
-import org.openqa.selenium.chrome.ChromeOptions;
 import org.openqa.selenium.interactions.Actions;
 import org.openqa.selenium.support.ui.WebDriverWait;
 
@@ -17,14 +16,14 @@ public class DriverFactory {
 	public static Robot robot;
 	public static ArrayList<String> tabs;
 
-	public static WebDriver getDriver() {
-		
+	public static WebDriver getDriver(String googleDriverPathStr) {
+
 		// Driver設定
 		if (driver == null) {
-			
+
 			System.out.println("呼叫到DriverSet()");
-//			System.setProperty("webdriver.chrome.driver","C:\\\\Users/admin/Desktop/chromedriver.exe");
-			System.setProperty("webdriver.chrome.driver","G:/chromedriver.exe");
+			System.setProperty("webdriver.chrome.driver", googleDriverPathStr);
+//			System.setProperty("webdriver.chrome.driver","G:/chromedriver.exe");
 			// 螢幕設定
 //			ChromeOptions options = new ChromeOptions();
 //			options.addArguments("test-type");
@@ -38,11 +37,11 @@ public class DriverFactory {
 //			// 將設定黨匯入
 //			driver = new ChromeDriver(options);
 			driver = new ChromeDriver();
-			
+
 			driver.manage().window().maximize();
-		    
+
 //			driver.manage().window().setSize(new Dimension(1024, 768));
-			
+
 			System.out.println(driver);
 		}
 		return driver;

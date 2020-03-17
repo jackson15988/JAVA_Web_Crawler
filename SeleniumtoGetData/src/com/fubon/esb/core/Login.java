@@ -7,7 +7,6 @@ import java.text.SimpleDateFormat;
 import java.util.ArrayList;
 import java.util.Date;
 import java.util.HashMap;
-import java.util.List;
 import java.util.Timer;
 import java.util.TimerTask;
 
@@ -22,7 +21,7 @@ import com.fubon.esb.util.LineNotify;
 //登入NSP的畫面
 public class Login {
 
-	static WebDriver webObj = DriverFactory.getDriver();
+	static WebDriver webObj = null;
 
 	private static ArrayList<String> specificSizeList01 = new ArrayList<>();
 	private static ArrayList<String> specificSizeList02 = new ArrayList<>();
@@ -37,8 +36,12 @@ public class Login {
 	private static HashMap<String, ArrayList<Object>> dbMap = new HashMap<>();
 	private static String issuedPodStr = "";
 	private static String publineToken = "";
-	private static int stegosaurusOverweight = 0; // 劍龍加碼次數
-	private static int stegosaurusDismissal = 0; // 劍龍加碼次數
+	public static int stegosaurusOverweight = 0; // 劍龍加碼次數
+	public static int stegosaurusDismissal = 0; // 劍龍加碼次數
+	private static String WhetherSeal = "";
+	public static boolean stegosaurusAutomaticRenewal = true;
+	private static String lineGoldenKey;
+	public static int[] beforeBetNumber;
 
 	// 預測號碼
 	private static ArrayList<Integer> issueForecastNumber = new ArrayList<>();
@@ -49,24 +52,36 @@ public class Login {
 	private static int stegosaurusBitMoney[] = null; // 劍龍策略下注金額{0,10,20,30,40,}
 
 	// 是否開啟測試功能
-	private static boolean isTest = true;
+	private static boolean isTest;
 
 	private static boolean isForceRun = false;
+
+	public static boolean stegosaurusstrategyTimeout = true;
 
 	public static void loginWEB(String readPath, String strategyName, HashMap<String, int[]> betList,
 			HashMap<String, Boolean> strategySwitch, HashMap<String, String> accPas,
 			HashMap<String, Object> otherParameters) throws Exception {
 		try {
 
+			webObj = DriverFactory.getDriver(otherParameters.get("googleDriverPathStr").toString());
 			// 初始化地方
 			luckAirShipbitMoney = betList.get("luckAirshpBitMoney");
 			stegosaurusBitMoney = betList.get("stegosaurusBitMoney");
+			lineGoldenKey = otherParameters.get("lineGoldenKey").toString();
+			isTest = (boolean) otherParameters.get("isDemoRun");
+			stegosaurusAutomaticRenewal = (boolean) otherParameters.get("StegosaurusAutomaticRenewalinit");
 //			DriverFactory.getDriver().get("https://gs5528.com/#/home?sub=0");
 			webObj.get("https://gs5528.com/#/home?sub=0");
 			if (isTest) {
-				Thread.sleep(5000);
-
-				// 測試按鈕登入
+				boolean isInit = isJudgingElement(webObj, By.xpath("//div[@class='demoBtn']"));
+				while (!isInit) {
+					// 測試按鈕登入 如果還不存在 則持續搜尋
+					isInit = isJudgingElement(webObj, By.xpath("//div[@class='demoBtn']"));
+					Thread.sleep(1000);
+					if (isInit) {
+						break;
+					}
+				}
 				webObj.findElement(By.xpath("//div[@class='demoBtn']")).click();
 				Thread.sleep(1000);
 				webObj.findElement(By.xpath("//div[@class='btn blueBtn']")).click();
@@ -94,24 +109,56 @@ public class Login {
 				// 登入帳號
 				DriverFactory.getWait()
 						.until(ExpectedConditions.visibilityOfElementLocated(By.xpath("//input[@type='text']")))
-						.sendKeys("jackson15988");
+						.sendKeys("");
 				Thread.sleep(1000);
 				// 登入密碼
 				DriverFactory.getWait()
 						.until(ExpectedConditions.visibilityOfElementLocated(By.xpath("//input[@type='password']")))
-						.sendKeys("536225ab");
+						.sendKeys("");
 				Thread.sleep(1000);
 
 				webObj.findElement(By.xpath("//div[@class='loginBtn']")).click();
 				System.out.println("登入成功");
+
+				Thread.sleep(2000);
+				webObj.findElement(By.xpath("//a[@class='yes']")).click();
+				Thread.sleep(2000);
+
+				webObj.findElement(By.xpath("//div[@class='closeIcon']")).click();
+				Thread.sleep(100);
+				webObj.findElement(By.xpath("//div[@class='closeIcon']")).click();
+				Thread.sleep(100);
+				webObj.findElement(By.xpath("//div[@class='closeIcon']")).click();
+				Thread.sleep(100);
+				webObj.findElement(By.xpath("//div[@class='closeIcon']")).click();
+				Thread.sleep(100);
+				webObj.findElement(By.xpath("//div[@class='closeIcon']")).click();
+				Thread.sleep(100);
+				webObj.findElement(By.xpath("//div[@class='closeIcon']")).click();
+				Thread.sleep(100);
+				webObj.findElement(By.xpath("//div[@class='closeIcon']")).click();
 			}
 
 			Timer timer = new Timer();
 			TimerTask task = new TimerTask() {
 				@Override
 				public void run() {
-					String WhetherSeal = webObj.findElement(By.xpath("//*[@id='betWrapper']/div[1]/div[3]/div[1]"))
-							.getText();
+
+					boolean whBol = isJudgingElement(webObj, By.xpath("//*[@id='betWrapper']/div[1]/div[3]/div[1]"));
+					while (!whBol) {
+						try {
+							Thread.sleep(1000);
+							System.out.println("正在獲取開盤資訊>> ---   開盤  --- 已封盤 --- 未開狀態");
+							whBol = isJudgingElement(webObj, By.xpath("//*[@id='betWrapper']/div[1]/div[3]/div[1]"));
+							if (whBol) {
+								WhetherSeal = webObj.findElement(By.xpath("//*[@id='betWrapper']/div[1]/div[3]/div[1]"))
+										.getText();
+								break;
+							}
+						} catch (InterruptedException e) {
+							System.out.println("取得開盤狀態發生錯誤!!");
+						}
+					}
 
 					boolean resultIsStartTime = TimeJudgment.timeJudgment();
 					if (resultIsStartTime) {
@@ -124,8 +171,8 @@ public class Login {
 
 							try {
 //						
-								System.out.println("先等待30秒!!!．．．．．");
-								Thread.sleep(30 * 1000);
+								System.out.println("正在接收彩哥哥資訊，先等待30秒!!!．．．．．");
+								Thread.sleep(60 * 1000);
 
 								if (!WhetherSeal.equals("已封盤") && strategySwitch.get("airshipCheckBoxValue") == true) {
 									// 這裡直行友道的策略
@@ -133,8 +180,8 @@ public class Login {
 								}
 
 								// 執行劍龍的策略
-								if (!WhetherSeal.equals("已封盤")
-										&& strategySwitch.get("stegosaurusCheckBoxValue") == true) {
+								if (!WhetherSeal.equals("已封盤") && strategySwitch.get("stegosaurusCheckBoxValue") == true
+										&& stegosaurusstrategyTimeout == true) {
 									stegosaurusStrategy(readPath, strategyName,
 											otherParameters.get("rxecutiveRacing").toString());
 								}
@@ -161,7 +208,7 @@ public class Login {
 			System.out.println("完成");
 
 		} catch (Exception e) {
-			LineNotify.callEvent("63KkaFIQzJ8WE3J7pq2NR2mzowoDXDxM6rTfKJk5ok4", "系統發生錯誤" + e);
+			LineNotify.callEvent(lineGoldenKey, "系統發生錯誤" + e);
 			System.out.println(e);
 		}
 	}
@@ -250,8 +297,9 @@ public class Login {
 			Thread.sleep(1000);
 			int bitOrderMoney = luckAirShipbitMoney[overweightCount];
 			String bitOrderMoneyStr = String.valueOf(bitOrderMoney);
+			System.out.println("此次為第幾關:" + overweightCount + "此次下注金額為:" + bitOrderMoneyStr);
 
-			if (bitOrderMoney != 0) {
+			if (bitOrderMoney != 0 && !bitOrderMoneyStr.equals("0")) {
 				for (Integer bitNo : issueForecastNumber) {
 					switch (bitNo) {
 					case 1:
@@ -318,7 +366,7 @@ public class Login {
 			Thread.sleep(1500);
 			webObj.findElement(By.xpath("//*[@id='betWrapper']/div[2]/div/div[1]/div[4]/div/div[3]/div[1]")).click();
 		} catch (Exception e) {
-			LineNotify.callEvent("63KkaFIQzJ8WE3J7pq2NR2mzowoDXDxM6rTfKJk5ok4", "系統發生錯誤" + e);
+			LineNotify.callEvent(lineGoldenKey, "系統發生錯誤" + e);
 			System.out.println("系統發生錯誤" + e);
 		}
 
@@ -328,8 +376,6 @@ public class Login {
 
 		System.out.println("進入執行");
 		BufferedReader br;
-		List<String> luckShipdbList = new ArrayList<>();
-
 		int i = 0;
 		try {
 			System.out.println("點選幸運飛艇");
@@ -338,7 +384,14 @@ public class Login {
 			webObj.findElement(By.xpath("//*[@id='app']/div/nav/div[2]/div[2]/div[1]/div[3]/div")).click();
 			System.out.println("點選數字盤");
 			webObj.findElement(By.xpath("//*[@id='app']/div/menu/div[2]")).click();
-			Thread.sleep(500);
+			Thread.sleep(1000);
+
+			if (webObj.findElement(By.xpath("//*[@id='defaultTop']")).isSelected()) {
+				webObj.findElement(By.xpath("//*[@id='defaultTop']")).click();
+				// 清空元件
+				webObj.findElement(By.xpath("//*[@id='betWrapper']/div[2]/div/div[1]/div[1]/div[2]")).click();
+
+			}
 
 			String str = null;
 			InputStreamReader isr = new InputStreamReader(new FileInputStream(readPath), "UTF-8");
@@ -351,28 +404,25 @@ public class Login {
 					String newLottyNumber = str.substring(str.toString().indexOf("：") + 1, str.length());
 					// 开奖结果
 					String numbersp[] = newLottyNumber.split(" ");
-					System.out.println("執行找出本次第" + executiveRanking + "名次的開獎號碼");
+
 					int executiveRankingint = Integer.valueOf(executiveRanking);
 					String catchNumber = numbersp[executiveRankingint];
 
-					System.out.println(numbersp.toString());
 				}
-				System.out.println("開始判斷彩票");
+
 				// System.out.println("显示数据 :" + str.toString());
 				if (str.contains("期")) {
-					System.out.println("期--彩票有資料");
 					if (str.contains(strategyName + "冠军")) {
-						System.out.println("進入冠軍大小");
 						if (str != null && !str.isEmpty()) {
 							specificSizeList01.add(str.toString());
 						}
 					} else if (str.contains(strategyName + "亚军")) {
-						System.out.println("進入亞軍大小");
+
 						if (str != null && !str.isEmpty()) {
 							specificSizeList02.add(str.toString());
 						}
 					} else if (str.contains(strategyName + "季军")) {
-						System.out.println("進入季軍大小");
+
 						if (str != null && !str.isEmpty()) {
 							specificSizeList03.add(str.toString());
 						}
@@ -474,7 +524,7 @@ public class Login {
 			//
 		} catch (Exception e) {
 			System.out.println("發生錯誤:" + e);
-			LineNotify.callEvent("63KkaFIQzJ8WE3J7pq2NR2mzowoDXDxM6rTfKJk5ok4", "系統發生錯誤" + e);
+			LineNotify.callEvent(lineGoldenKey, "系統發生錯誤" + e);
 		}
 
 		// 整行讀取
@@ -527,9 +577,25 @@ public class Login {
 		if (thisPeriodint - beforePeriodInt == 1) {
 			webViewBeforeBitNumber = webObj
 					.findElement(By.xpath("//*[@id='app']/div/nav/div[1]/div[1]/div/a/div/div[1]")).getText();
-
 		}
 		return webViewBeforeBitNumber;
+	}
+
+	public static int getGspedNowPeriod() {
+
+		// 取得頁面上的號碼
+		String beforePeriod = webObj.findElement(By.xpath("//*[@id='app']/div/nav/div[1]/div[1]/div/div/div[2]"))
+				.getText();
+		// 轉換頁面上的期號
+		beforePeriod = beforePeriod.replace("期开奖", "");
+		beforePeriod = beforePeriod.substring(beforePeriod.length() - 3, beforePeriod.length());
+		Integer beforePeriodInt = Integer.valueOf(beforePeriod);
+		String theDrawPeriod = webObj.findElement(By.xpath("//*[@id='betWrapper']/div[1]/div[3]")).getText();
+		theDrawPeriod = theDrawPeriod.substring(0, theDrawPeriod.indexOf("期"));
+		theDrawPeriod = theDrawPeriod.substring(theDrawPeriod.length() - 3, theDrawPeriod.length());
+		Integer thisPeriodint = Integer.valueOf(theDrawPeriod);
+
+		return thisPeriodint;
 	}
 
 	public static int specificSize(ArrayList<String> numberOneList, int ranking, String errorCount) {
@@ -543,9 +609,13 @@ public class Login {
 			String predictionPeriodStr = numberOneList.get(numberOneList.size() - 1);
 
 			if (firstTwoTimesPeriodStr.contains("挂")) {
-				LineNotify.callEvent("63KkaFIQzJ8WE3J7pq2NR2mzowoDXDxM6rTfKJk5ok4",
-						"名次" + ranking + "發生(掛)情形，請自行判斷是否要轉換!!");
+				System.out.println("偵測到【掛】名次完整資料為:" + firstTwoTimesPeriodStr);
 				stegosaurusOverweight += 1;
+				// 這代表要啟動加碼機制
+				if (!stegosaurusAutomaticRenewal) {
+					LineNotify.callEvent(lineGoldenKey, "名次" + ranking + "發生(掛)情形，目前已經暫停下單，如需再次啟動起按啟動下單按鍵");
+					stegosaurusstrategyTimeout = false;
+				}
 			}
 
 			// 則代表在加碼的情況之下要開始解除他
@@ -554,7 +624,7 @@ public class Login {
 			}
 			// 則是代表中三次
 			if (stegosaurusDismissal >= 3) {
-				LineNotify.callEvent("63KkaFIQzJ8WE3J7pq2NR2mzowoDXDxM6rTfKJk5ok4",
+				LineNotify.callEvent(lineGoldenKey,
 						"名次" + ranking + "解除總資金加碼第 " + stegosaurusOverweight + " 層，請判斷是否更換策略!");
 				stegosaurusOverweight = 0;
 				stegosaurusDismissal = 0;
@@ -598,7 +668,7 @@ public class Login {
 
 			System.out.println("取得網頁上下單周期期數:" + issuedPodStr + "取得即將下單的周期:" + codingPeriodCount);
 			Integer codingper = Integer.valueOf(codingPeriodCount);
-			System.out.println("codingper:" + codingper);
+			System.out.println("下單BetMoney的 幾期  codingper:" + codingper);
 
 			// 錯誤周期 大於多少 // 保留使用
 			Integer errorCounts = Integer.valueOf(errorCount);
@@ -621,10 +691,11 @@ public class Login {
 					dBlist.add(codingPeriodCount);
 					dBlist.add(strategy); // 策略中文
 					dBlist.add(bend_key);// 進入內部的key
-					System.out.println("準備進入DB的期數為:" + issuedNumber);
-					System.out.println("準備進入DB的下單名次為:" + ranking);
-					System.out.println("準備進入DB的預測號碼為:" + getpredictionNo);
-					System.out.println("準備進入DB的的加碼次數為:" + codingPeriodCount);
+					System.out.println("---------------------------");
+					System.out.println("下單期數為:" + issuedNumber);
+					System.out.println("此次下單猜測第幾名:" + ranking + "預測下單號碼為:" + getpredictionNo);
+					System.out.println("目前是第幾關 : " + codingPeriodCount);
+					System.out.println("---------------------------");
 					if (ranking == 10) {
 						dbMap.put("specific10", dBlist);
 					} else {
@@ -654,6 +725,12 @@ public class Login {
 		int[] betNumber = StringArrToIntArr(StrgosaurusbetNo.toString().split(","));
 		int codingPeriodCount = Integer.valueOf((String) betList.get(3));
 		int bitOrderMoneyint = stegosaurusBitMoney[codingPeriodCount - 1];
+
+		// 如果是到3週期時候 我們紀錄進去一筆
+		if (codingPeriodCount >= 3) {
+			beforeBetNumber = betNumber;
+		}
+
 		// 金額
 		// 代表總本金有進行加碼動作
 		if (stegosaurusOverweight > 0) {
@@ -679,7 +756,7 @@ public class Login {
 		}
 		String bitOrderMoneyStr = String.valueOf(bitOrderMoneyint);
 
-		if (ranking == 1) {
+		if (ranking == 1 && !bitOrderMoneyStr.equals("0")) {
 			for (Integer bitNo : betNumber) {
 				switch (bitNo) {
 				case 1:
@@ -748,6 +825,16 @@ public class Login {
 
 		return false;
 
+	}
+
+	public static boolean isJudgingElement(WebDriver webDriver, By by) {
+		try {
+			webDriver.findElement(by);
+			return true;
+		} catch (Exception e) {
+			System.out.println("不存在此元素");
+			return false;
+		}
 	}
 
 	public static int[] StringArrToIntArr(String[] s) {

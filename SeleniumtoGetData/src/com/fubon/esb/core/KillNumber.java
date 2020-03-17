@@ -1,8 +1,6 @@
 package com.fubon.esb.core;
 
-import java.lang.reflect.Array;
 import java.util.ArrayList;
-import java.util.Arrays;
 import java.util.BitSet;
 
 import com.fubon.esb.util.LineNotify;
