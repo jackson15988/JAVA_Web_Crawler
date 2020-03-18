@@ -6,6 +6,7 @@ import java.util.ArrayList;
 
 import org.openqa.selenium.WebDriver;
 import org.openqa.selenium.chrome.ChromeDriver;
+import org.openqa.selenium.chrome.ChromeOptions;
 import org.openqa.selenium.interactions.Actions;
 import org.openqa.selenium.support.ui.WebDriverWait;
 
@@ -23,24 +24,17 @@ public class DriverFactory {
 
 			System.out.println("呼叫到DriverSet()");
 			System.setProperty("webdriver.chrome.driver", googleDriverPathStr);
-//			System.setProperty("webdriver.chrome.driver","G:/chromedriver.exe");
+			// System.setProperty("webdriver.chrome.driver","G:/chromedriver.exe");
 			// 螢幕設定
-//			ChromeOptions options = new ChromeOptions();
-//			options.addArguments("test-type");
-//			options.addArguments("start-maximized");
-//			options.addArguments("--js-flag=--expose-gc");
-//			options.addArguments("--enable-precise-memory-info");
-//			options.addArguments("--disable-popup-blocking");
-//			options.addArguments("--disable-default-apps");
-//			options.addArguments("test-type=browser");
-//			options.addArguments("disable-infobars");
-//			// 將設定黨匯入
-//			driver = new ChromeDriver(options);
-			driver = new ChromeDriver();
+			ChromeOptions options = new ChromeOptions();
+			options.setHeadless(true);
+			// // 將設定黨匯入
+			// driver = new ChromeDriver(options);
+			driver = new ChromeDriver(options);
 
 			driver.manage().window().maximize();
 
-//			driver.manage().window().setSize(new Dimension(1024, 768));
+			// driver.manage().window().setSize(new Dimension(1024, 768));
 
 			System.out.println(driver);
 		}
