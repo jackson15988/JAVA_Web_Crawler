@@ -41,7 +41,9 @@ public class Login {
 	private static String WhetherSeal = "";
 	public static boolean stegosaurusAutomaticRenewal = true;
 	private static String lineGoldenKey;
-	public static int[] beforeBetNumber;
+
+	// 高關數暫存 如果是三先存在在這等待判斷是否加碼
+	private static HashMap<String, Object> highPassCount = new HashMap<>();
 
 	// 預測號碼
 	private static ArrayList<Integer> issueForecastNumber = new ArrayList<>();
@@ -380,6 +382,17 @@ public class Login {
 		try {
 			System.out.println("點選幸運飛艇");
 			Thread.sleep(500);
+			boolean clickLuckPag = isJudgingElement(webObj,
+					By.xpath("//*[@id='app']/div/nav/div[2]/div[2]/div[1]/div[3]/div"));
+			while (!clickLuckPag) {
+				clickLuckPag = isJudgingElement(webObj,
+						By.xpath("//*[@id='app']/div/nav/div[2]/div[2]/div[1]/div[3]/div"));
+				System.out.println("如操作者切勿自行切換自動化網頁的頁面，目前找不到幸運飛艇的頁面，搜尋三次失敗則會自行關閉程式");
+				Thread.sleep(500);
+				if (clickLuckPag) {
+					break;
+				}
+			}
 			// 進來之後要先點選幸運飛艇 //*[@id="app"]/div/nav/div[2]/div[2]/div[1]/div[3]/div
 			webObj.findElement(By.xpath("//*[@id='app']/div/nav/div[2]/div[2]/div[1]/div[3]/div")).click();
 			System.out.println("點選數字盤");
@@ -728,7 +741,22 @@ public class Login {
 
 		// 如果是到3週期時候 我們紀錄進去一筆
 		if (codingPeriodCount >= 3) {
-			beforeBetNumber = betNumber;
+			// 存入 關卡其 // 預測號碼
+			highPassCount.put(betList.get(0).toString(), betNumber);
+		}
+		// http去撈取資料開講資料了
+		if (highPassCount.size() != 0) {
+
+			// HTTP出去 回來開獎號碼
+
+			// 回滾 KEY 比對 中獎
+
+//			中獎  //if() {
+//				highPassCount.remove
+//			}else{
+			/// 真正的掛了
+			// }
+
 		}
 
 		// 金額

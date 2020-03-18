@@ -37,8 +37,7 @@ public class gatherinformation {
 	private String stegosaurusDouble; // 劍龍策略 掛之後澳加碼幾倍
 	private boolean StegosaurusAutomaticRenewalinit;
 	private String lineGoldenKey = ""; // LINE 金鑰匙
-	private String googleDriverPathStr ="";
-	
+	private String googleDriverPathStr = "";
 
 	private JTextField delaySecondsText;
 	private JTextField strategyNameText;
@@ -503,7 +502,7 @@ public class gatherinformation {
 					System.out.println(selectedFile.getPath()); // 印出檔名
 					String path = selectedFile.getPath();
 					path = path.replaceAll("\\\\", "\\/");
-					googleDriverPath.setText(path);
+					readPathText.setText(path);
 				}
 			}
 		});
@@ -603,7 +602,7 @@ public class gatherinformation {
 					Login.stegosaurusAutomaticRenewal = stegosaurusAutomaticRenewalCheckBox.isSelected();
 					StegosaurusAutomaticRenewalinit = stegosaurusAutomaticRenewalCheckBox.isSelected();
 					lineGoldenKey = LINEGoldenKey.getText();
-					googleDriverPathStr =  googleDriverPath.getText();
+					googleDriverPathStr = googleDriverPath.getText();
 				} catch (Exception e1) {
 
 				}
