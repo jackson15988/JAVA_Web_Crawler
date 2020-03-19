@@ -2,22 +2,25 @@ package com.fubon.esb.dao;
 
 import java.sql.Connection;
 import java.sql.DriverManager;
+import java.sql.PreparedStatement;
 import java.sql.SQLException;
 import java.sql.Statement;
+import java.util.Calendar;
 
 public class JdbcConnection {
 	// JDBC driver name and database URL
 	static final String JDBC_DRIVER = "com.mysql.jdbc.Driver";
-	static final String DB_URL = "jdbc:mysql://localhost/STUDENTS";
+	static final String DB_URL = "jdbc:mysql://45.32.49.87:3306/luckairship?characterEncoding=latin1&useConfigs=maxPerformance";
 
 	// Database credentials
-	static final String USER = "username";
-	static final String PASS = "password";
+	static final String USER = "root";
+	static final String PASS = "36f57bc6fd";
 
 	public static void inserPeriodNumber(String resultPeriod, String winningNumbers, int issue) {
 
 		Connection conn = null;
-		Statement stmt = null;
+		PreparedStatement preparedStmt = null;
+
 		try {
 			// STEP 2: Register JDBC driver
 			Class.forName("com.mysql.jdbc.Driver");
@@ -27,19 +30,22 @@ public class JdbcConnection {
 			conn = DriverManager.getConnection(DB_URL, USER, PASS);
 			System.out.println("Connected database successfully...");
 
+			Calendar calendar = Calendar.getInstance();
+			java.sql.Date startDate = new java.sql.Date(calendar.getTime().getTime());
+
 			// STEP 4: Execute a query
 			System.out.println("Inserting records into the table...");
-			stmt = conn.createStatement();
 
-			String sql = "INSERT INTO Registration " + "VALUES (100, 'Zara', 'Ali', 18)";
-			stmt.executeUpdate(sql);
-			sql = "INSERT INTO Registration " + "VALUES (101, 'Mahnaz', 'Fatma', 25)";
-			stmt.executeUpdate(sql);
-			sql = "INSERT INTO Registration " + "VALUES (102, 'Zaid', 'Khan', 30)";
-			stmt.executeUpdate(sql);
-			sql = "INSERT INTO Registration " + "VALUES(103, 'Sumit', 'Mittal', 28)";
-			stmt.executeUpdate(sql);
-			System.out.println("Inserted records into the table...");
+			String sql = " insert into bet_each_draw (PERIOD, PERIODSTR, PERIOD_NUMBER, CREATION_TIME)"
+					+ " values (?, ?, ?, ?)";
+
+			preparedStmt = conn.prepareStatement(sql);
+			preparedStmt.setInt(1, issue);
+			preparedStmt.setString(2, resultPeriod);
+			preparedStmt.setString(3, winningNumbers);
+			preparedStmt.setDate(4, startDate);
+
+			preparedStmt.execute();
 
 		} catch (SQLException se) {
 			// Handle errors for JDBC
@@ -50,7 +56,7 @@ public class JdbcConnection {
 		} finally {
 			// finally block used to close resources
 			try {
-				if (stmt != null)
+				if (preparedStmt != null)
 					conn.close();
 			} catch (SQLException se) {
 			} // do nothing

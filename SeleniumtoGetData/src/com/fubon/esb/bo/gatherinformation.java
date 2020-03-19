@@ -106,7 +106,7 @@ public class gatherinformation {
 			public void actionPerformed(ActionEvent e) {
 				System.out.println("程式開始運行．．．");
 				if (strategyName.isEmpty() || path.isEmpty() || sec.isEmpty() || luckBitMoneyList == null
-						|| racngCarBitMoneyList == null) {
+						|| racngCarBitMoneyList == null || lineGoldenKey == null || lineGoldenKey.length() >= 37) {
 					JOptionPane.showMessageDialog(null, "您未設置運行參數，或尚未按保存設定!!", "錯誤", JOptionPane.ERROR_MESSAGE);
 				} else {
 					HashMap<String, int[]> betList = new HashMap<>();
@@ -199,14 +199,14 @@ public class gatherinformation {
 					luckyAirshipOrderAmount.setText("10,20,40,80,160,320,650,1310");
 					carOrderAmount.setText("10,20,40,80,160,320,650,1310");
 					stegosaurusBitMony.setText("10,20,40");
-					LINEGoldenKey.setText("63KkaFIQzJ8WE3J7pq2NR2mzowoDXDxM6rTfKJk5ok4");
+
 				} catch (Exception e1) {
 
 				}
 			}
 		});
 
-		JButton saveSettings = new JButton("保存設定");
+		JButton saveSettings = new JButton("我叫做讓程式立即吃這設定");
 		springLayout.putConstraint(SpringLayout.EAST, button, -6, SpringLayout.WEST, saveSettings);
 		springLayout.putConstraint(SpringLayout.NORTH, saveSettings, 0, SpringLayout.NORTH, srartbutton);
 		springLayout.putConstraint(SpringLayout.EAST, saveSettings, -6, SpringLayout.WEST, srartbutton);
