@@ -106,7 +106,7 @@ public class gatherinformation {
 			public void actionPerformed(ActionEvent e) {
 				System.out.println("程式開始運行．．．");
 				if (strategyName.isEmpty() || path.isEmpty() || sec.isEmpty() || luckBitMoneyList == null
-						|| racngCarBitMoneyList == null || lineGoldenKey == null || lineGoldenKey.length() >= 37) {
+						|| racngCarBitMoneyList == null || lineGoldenKey == null ) {
 					JOptionPane.showMessageDialog(null, "您未設置運行參數，或尚未按保存設定!!", "錯誤", JOptionPane.ERROR_MESSAGE);
 				} else {
 					HashMap<String, int[]> betList = new HashMap<>();

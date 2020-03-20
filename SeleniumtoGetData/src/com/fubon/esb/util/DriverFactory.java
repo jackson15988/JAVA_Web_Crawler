@@ -27,7 +27,7 @@ public class DriverFactory {
 			// System.setProperty("webdriver.chrome.driver","G:/chromedriver.exe");
 			// 螢幕設定
 			ChromeOptions options = new ChromeOptions();
-			options.setHeadless(true);
+			options.setHeadless(false);
 			// // 將設定黨匯入
 			// driver = new ChromeDriver(options);
 			driver = new ChromeDriver(options);

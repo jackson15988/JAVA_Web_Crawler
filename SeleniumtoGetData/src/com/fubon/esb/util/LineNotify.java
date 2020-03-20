@@ -58,6 +58,6 @@ public class LineNotify {
 
 //String ex = "63KkaFIQzJ8WE3J7pq2NR2mzowoDXDxM6rTfKJk5ok4";
 //System.out.println(ex.length());
-	callEvent("63KkaFIQzJ8WE3J7pq2NR2mzowoDXDxM6rTfKJk5ok4", "公告:各單位注意- 今日因台北下雨天關係 麻煩請各位八點時候記得上大群觀看 LIVE直播 進行跟單 千萬不要外出");
+	callEvent("3icAXIGgf2a6FdtX6h8bbWAl5Q3EY9lZBdS69Ki8mi4", "公告:各單位注意- 今日因台北下雨天關係 麻煩請各位八點時候記得上大群觀看 LIVE直播 進行跟單 千萬不要外出");
 	}
 }

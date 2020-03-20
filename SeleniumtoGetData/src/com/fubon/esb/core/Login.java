@@ -34,6 +34,9 @@ public class Login {
 	private static ArrayList<String> specificSizeList09 = new ArrayList<>();
 	private static ArrayList<String> specificSizeList10 = new ArrayList<>();
 	private static HashMap<String, ArrayList<Object>> dbMap = new HashMap<>();
+	private static HashMap<String, String> lotteryMap = new HashMap<>(); // 每一期間開獎的號碼
+																			// //開講期數
+																			// //開獎號碼
 	private static String issuedPodStr = "";
 	private static String publineToken = "";
 	public static int stegosaurusOverweight = 0; // 劍龍加碼次數
@@ -43,7 +46,7 @@ public class Login {
 	private static String lineGoldenKey;
 
 	// 高關數暫存 如果是三先存在在這等待判斷是否加碼
-	private static HashMap<String, Object> highPassCount = new HashMap<>();
+	private static HashMap<String, HashMap<Integer, int[]>> highPassCount = new HashMap<>();
 
 	// 預測號碼
 	private static ArrayList<Integer> issueForecastNumber = new ArrayList<>();
@@ -72,7 +75,7 @@ public class Login {
 			lineGoldenKey = otherParameters.get("lineGoldenKey").toString();
 			isTest = (boolean) otherParameters.get("isDemoRun");
 			stegosaurusAutomaticRenewal = (boolean) otherParameters.get("StegosaurusAutomaticRenewalinit");
-//			DriverFactory.getDriver().get("https://gs5528.com/#/home?sub=0");
+			// DriverFactory.getDriver().get("https://gs5528.com/#/home?sub=0");
 			webObj.get("https://gs5528.com/#/home?sub=0");
 			if (isTest) {
 				boolean isInit = isJudgingElement(webObj, By.xpath("//div[@class='demoBtn']"));
@@ -125,7 +128,20 @@ public class Login {
 				Thread.sleep(2000);
 				webObj.findElement(By.xpath("//a[@class='yes']")).click();
 				Thread.sleep(2000);
+				// *[@id="app"]/div/div[2]/div/div[6]
 
+				boolean closeIcon = isJudgingElement(webObj, By.xpath("//*[@id='app']/div/div[2]/div/div[6]"));
+				while (!closeIcon) {
+					// 測試按鈕登入 如果還不存在 則持續搜尋
+					closeIcon = isJudgingElement(webObj, By.xpath("//*[@id='app']/div/div[2]/div/div[6]"));
+					Thread.sleep(1000);
+					if (closeIcon) {
+						break;
+					}
+				}
+
+				webObj.findElement(By.xpath("//div[@class='closeIcon']")).click();
+				Thread.sleep(100);
 				webObj.findElement(By.xpath("//div[@class='closeIcon']")).click();
 				Thread.sleep(100);
 				webObj.findElement(By.xpath("//div[@class='closeIcon']")).click();
@@ -172,7 +188,7 @@ public class Login {
 						if (Integer.valueOf(realtime) % 5 == 0 || isForceRun) {
 
 							try {
-//						
+								//
 								System.out.println("正在接收彩哥哥資訊，先等待30秒!!!．．．．．");
 								Thread.sleep(60 * 1000);
 
@@ -393,7 +409,8 @@ public class Login {
 					break;
 				}
 			}
-			// 進來之後要先點選幸運飛艇 //*[@id="app"]/div/nav/div[2]/div[2]/div[1]/div[3]/div
+			// 進來之後要先點選幸運飛艇
+			// //*[@id="app"]/div/nav/div[2]/div[2]/div[1]/div[3]/div
 			webObj.findElement(By.xpath("//*[@id='app']/div/nav/div[2]/div[2]/div[1]/div[3]/div")).click();
 			System.out.println("點選數字盤");
 			webObj.findElement(By.xpath("//*[@id='app']/div/menu/div[2]")).click();
@@ -405,7 +422,8 @@ public class Login {
 				webObj.findElement(By.xpath("//*[@id='betWrapper']/div[2]/div/div[1]/div[1]/div[2]")).click();
 
 			}
-
+			// 執行存取每一筆開獎紀錄在catch
+			addlotteryNumberAndCycle();
 			String str = null;
 			InputStreamReader isr = new InputStreamReader(new FileInputStream(readPath), "UTF-8");
 			br = new BufferedReader(isr);
@@ -571,11 +589,13 @@ public class Login {
 
 	}
 
+	/**
+	 * @author IMI-JAVA-Ryan 這裡是取得左上角的開獎號碼 (已經開獎號碼結果)
+	 * @return
+	 */
 	public static String isInnerPeriod() {
-
 		String webViewBeforeBitNumber = "";
 		// 取得頁面上的號碼
-
 		String beforePeriod = webObj.findElement(By.xpath("//*[@id='app']/div/nav/div[1]/div[1]/div/div/div[2]"))
 				.getText();
 		// 轉換頁面上的期號
@@ -592,6 +612,34 @@ public class Login {
 					.findElement(By.xpath("//*[@id='app']/div/nav/div[1]/div[1]/div/a/div/div[1]")).getText();
 		}
 		return webViewBeforeBitNumber;
+	}
+
+	/**
+	 * @author IMI-JAVA-Ryan
+	 * @return 返回一個 開獎期數 以及 開獎號碼的map
+	 */
+	public static void addlotteryNumberAndCycle() {
+
+		String webViewBeforeBitNumber = "";
+		// 取得頁面上的號碼
+		String beforePeriod = webObj.findElement(By.xpath("//*[@id='app']/div/nav/div[1]/div[1]/div/div/div[2]"))
+				.getText();
+		// 轉換頁面上的期號
+		beforePeriod = beforePeriod.replace("期开奖", "");
+		beforePeriod = beforePeriod.substring(beforePeriod.length() - 3, beforePeriod.length());
+		Integer beforePeriodInt = Integer.valueOf(beforePeriod);
+		String theDrawPeriod = webObj.findElement(By.xpath("//*[@id='betWrapper']/div[1]/div[3]")).getText();
+		theDrawPeriod = theDrawPeriod.substring(0, theDrawPeriod.indexOf("期"));
+		theDrawPeriod = theDrawPeriod.substring(theDrawPeriod.length() - 3, theDrawPeriod.length());
+		Integer thisPeriodint = Integer.valueOf(theDrawPeriod);
+
+		if (thisPeriodint - beforePeriodInt == 1) {
+			webViewBeforeBitNumber = webObj
+					.findElement(By.xpath("//*[@id='app']/div/nav/div[1]/div[1]/div/a/div/div[1]")).getText();
+		}
+
+		lotteryMap.put(beforePeriod, webViewBeforeBitNumber);
+
 	}
 
 	public static int getGspedNowPeriod() {
@@ -617,32 +665,32 @@ public class Login {
 
 			// 取得最新的一列
 			String firstTwoTimesPeriodStr = numberOneList.get(numberOneList.size() - 2);
-
 			// 取得最新的一列
 			String predictionPeriodStr = numberOneList.get(numberOneList.size() - 1);
+			// if (firstTwoTimesPeriodStr.contains("挂")) {
+			// System.out.println("偵測到【掛】名次完整資料為:" + firstTwoTimesPeriodStr);
+			// stegosaurusOverweight += 1;
+			// // 這代表要啟動加碼機制
+			// if (!stegosaurusAutomaticRenewal) {
+			// LineNotify.callEvent(lineGoldenKey, "名次" + ranking +
+			// "發生(掛)情形，目前已經暫停下單，如需再次啟動起按啟動下單按鍵");
+			// stegosaurusstrategyTimeout = false;
+			// }
+			// }
 
-			if (firstTwoTimesPeriodStr.contains("挂")) {
-				System.out.println("偵測到【掛】名次完整資料為:" + firstTwoTimesPeriodStr);
-				stegosaurusOverweight += 1;
-				// 這代表要啟動加碼機制
-				if (!stegosaurusAutomaticRenewal) {
-					LineNotify.callEvent(lineGoldenKey, "名次" + ranking + "發生(掛)情形，目前已經暫停下單，如需再次啟動起按啟動下單按鍵");
-					stegosaurusstrategyTimeout = false;
-				}
-			}
-
-			// 則代表在加碼的情況之下要開始解除他
-			if (stegosaurusOverweight > 0 && firstTwoTimesPeriodStr.contains("中")) {
-				stegosaurusDismissal += 1;
-			}
-			// 則是代表中三次
-			if (stegosaurusDismissal >= 3) {
-				LineNotify.callEvent(lineGoldenKey,
-						"名次" + ranking + "解除總資金加碼第 " + stegosaurusOverweight + " 層，請判斷是否更換策略!");
-				stegosaurusOverweight = 0;
-				stegosaurusDismissal = 0;
-			}
-
+			// // 則代表在加碼的情況之下要開始解除他
+			// if (stegosaurusOverweight > 0 &&
+			// firstTwoTimesPeriodStr.contains("中")) {
+			// stegosaurusDismissal += 1;
+			// }
+			// // 則是代表中三次
+			// if (stegosaurusDismissal >= 3) {
+			// LineNotify.callEvent(lineGoldenKey,
+			// "名次" + ranking + "解除總資金加碼第 " + stegosaurusOverweight + "
+			// 層，請判斷是否更換策略!");
+			// stegosaurusOverweight = 0;
+			// stegosaurusDismissal = 0;
+			// }
 			// 如果上一期間是掛掉的狀態，則才會取得最新一期間的預測號碼
 			String periodStr = numberOneList.get(numberOneList.size() - 1);
 			System.out.println("取得最新一期名次【" + ranking + "】的資料:" + periodStr);
@@ -733,6 +781,7 @@ public class Login {
 
 	public static boolean stegosaurusStrategyBet(ArrayList<Object> betList) throws InterruptedException {
 
+		int period = (int) betList.get(0); // 開獎期數
 		int ranking = (int) betList.get(1);
 		Object StrgosaurusbetNo = betList.get(2);
 		int[] betNumber = StringArrToIntArr(StrgosaurusbetNo.toString().split(","));
@@ -741,19 +790,47 @@ public class Login {
 
 		// 如果是到3週期時候 我們紀錄進去一筆
 		if (codingPeriodCount >= 3) {
-			// 存入 關卡其 // 預測號碼
-			highPassCount.put(betList.get(0).toString(), betNumber);
+			HashMap<Integer, int[]> betInformation = new HashMap<>();
+			// 名次 + 預測號碼
+			betInformation.put(ranking, betNumber);
+			// 期數 + 名次 + 號碼
+			highPassCount.put(betList.get(0).toString(), betInformation);
 		}
 		// http去撈取資料開講資料了
 		if (highPassCount.size() != 0) {
+			String beforePeriodOpenNumber = lotteryMap.get(period); // 過去開獎號碼
+			ArrayList<String> beNo = HandleNumber.numberConversionPage(beforePeriodOpenNumber);
+			HashMap<Integer, int[]> resultCatch = highPassCount.get(period); // 使用該期間號碼去查看是否有存在三碼以上
+			if (resultCatch.size() != 0) {
+				// 代表有.. 該期有達到三次的預測下單策略
+				int key = 0;
+				// 拿取到KEy之後 拿到這個KEY 我才知道我下哪一個車道
+				for (int keyResult : resultCatch.keySet()) {
+					key = keyResult;
+				}
+				System.out.println("開始比對前一期下哪一個車道" + key);
+				int[] resultAns = resultCatch.get(key); // 意思是我高關暫存的策略 之後才能比對
+				String beforePeriodOpenList[] = beNo.stream().toArray(String[]::new);
+				String keyWordNumber = beforePeriodOpenList[key - 1];
+				System.out.println("取得上一期該車道的中獎號碼為" + keyWordNumber);
+				int keyWordNumberi = Integer.valueOf(keyWordNumber);
+				for (int element : resultAns) {
+					if (element == keyWordNumberi) {
+						System.out.println("代表有中獎不需要加碼........");
+					} else {
+						System.out.println("代表沒有中獎............");
+					}
+				}
+
+			}
 
 			// HTTP出去 回來開獎號碼
 
 			// 回滾 KEY 比對 中獎
 
-//			中獎  //if() {
-//				highPassCount.remove
-//			}else{
+			// 中獎 //if() {
+			// highPassCount.remove
+			// }else{
 			/// 真正的掛了
 			// }
 
