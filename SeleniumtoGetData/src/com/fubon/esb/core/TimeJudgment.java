@@ -31,7 +31,7 @@ public class TimeJudgment {
 
 		if (starttime <= nowTime && nowTime <= endtime) {
 			isCheckOk = true;
-		} else {
+		}else {
 			System.out.println("取得現在系統毫秒數 : " + defaultNowDate + " 取得開始系統毫秒數 : " + defaultStartDate + " 取得結束系統毫秒數 :"
 					+ defaultEndDate);
 

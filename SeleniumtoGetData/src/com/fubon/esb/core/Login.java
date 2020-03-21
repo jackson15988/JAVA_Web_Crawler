@@ -88,25 +88,31 @@ public class Login {
 					}
 				}
 				webObj.findElement(By.xpath("//div[@class='demoBtn']")).click();
-				Thread.sleep(1000);
-				webObj.findElement(By.xpath("//div[@class='btn blueBtn']")).click();
-				Thread.sleep(1000);
-				webObj.findElement(By.xpath("//a[@class='yes']")).click();
-				Thread.sleep(2000);
 
-				webObj.findElement(By.xpath("//div[@class='closeIcon']")).click();
-				Thread.sleep(100);
-				webObj.findElement(By.xpath("//div[@class='closeIcon']")).click();
-				Thread.sleep(100);
-				webObj.findElement(By.xpath("//div[@class='closeIcon']")).click();
-				Thread.sleep(100);
-				webObj.findElement(By.xpath("//div[@class='closeIcon']")).click();
-				Thread.sleep(100);
-				webObj.findElement(By.xpath("//div[@class='closeIcon']")).click();
-				Thread.sleep(100);
-				webObj.findElement(By.xpath("//div[@class='closeIcon']")).click();
-				Thread.sleep(100);
-				webObj.findElement(By.xpath("//div[@class='closeIcon']")).click();
+				boolean isblueBtn = isJudgingElement(webObj, By.xpath("//div[@class='btn blueBtn']"));
+				while (!isblueBtn) {
+					// 測試按鈕登入 如果還不存在 則持續搜尋
+					isblueBtn = isJudgingElement(webObj, By.xpath("//div[@class='btn blueBtn']"));
+					Thread.sleep(1000);
+					if (isblueBtn) {
+						break;
+					}
+				}
+				webObj.findElement(By.xpath("//div[@class='btn blueBtn']")).click();
+
+				boolean yesButton = isJudgingElement(webObj, By.xpath("//a[@class='yes']"));
+				while (!yesButton) {
+					// 測試按鈕登入 如果還不存在 則持續搜尋
+					isInit = isJudgingElement(webObj, By.xpath("//a[@class='yes']"));
+					Thread.sleep(500);
+					if (isInit) {
+						break;
+					}
+				}
+				webObj.findElement(By.xpath("//a[@class='yes']")).click();
+
+				Thread.sleep(1000);
+				clickontheAnnouncement(webObj);
 
 			} else {
 				Thread.sleep(3000);
@@ -133,28 +139,14 @@ public class Login {
 				boolean closeIcon = isJudgingElement(webObj, By.xpath("//*[@id='app']/div/div[2]/div/div[6]"));
 				while (!closeIcon) {
 					// 測試按鈕登入 如果還不存在 則持續搜尋
+					webObj.findElement(By.xpath("//div[@class='closeIcon']")).click();
+					Thread.sleep(100);
 					closeIcon = isJudgingElement(webObj, By.xpath("//*[@id='app']/div/div[2]/div/div[6]"));
 					Thread.sleep(1000);
 					if (closeIcon) {
 						break;
 					}
 				}
-
-				webObj.findElement(By.xpath("//div[@class='closeIcon']")).click();
-				Thread.sleep(100);
-				webObj.findElement(By.xpath("//div[@class='closeIcon']")).click();
-				Thread.sleep(100);
-				webObj.findElement(By.xpath("//div[@class='closeIcon']")).click();
-				Thread.sleep(100);
-				webObj.findElement(By.xpath("//div[@class='closeIcon']")).click();
-				Thread.sleep(100);
-				webObj.findElement(By.xpath("//div[@class='closeIcon']")).click();
-				Thread.sleep(100);
-				webObj.findElement(By.xpath("//div[@class='closeIcon']")).click();
-				Thread.sleep(100);
-				webObj.findElement(By.xpath("//div[@class='closeIcon']")).click();
-				Thread.sleep(100);
-				webObj.findElement(By.xpath("//div[@class='closeIcon']")).click();
 			}
 
 			Timer timer = new Timer();
@@ -178,8 +170,8 @@ public class Login {
 						}
 					}
 
-					boolean resultIsStartTime = TimeJudgment.timeJudgment();
-					if (resultIsStartTime) {
+//					boolean resultIsStartTime = TimeJudgment.timeJudgment();
+					if (true) {
 						SimpleDateFormat sdf = new SimpleDateFormat("HH:mm:ss");
 						String time = sdf.format(new Date());
 						String[] timelist = time.split(":");
@@ -422,8 +414,7 @@ public class Login {
 				webObj.findElement(By.xpath("//*[@id='betWrapper']/div[2]/div/div[1]/div[1]/div[2]")).click();
 
 			}
-			// 執行存取每一筆開獎紀錄在catch
-			addlotteryNumberAndCycle();
+
 			String str = null;
 			InputStreamReader isr = new InputStreamReader(new FileInputStream(readPath), "UTF-8");
 			br = new BufferedReader(isr);
@@ -498,50 +489,50 @@ public class Login {
 				// 判断转换一 是否成功
 			}
 
-			if (specificSizeList02.size() != 0 && executiveRanking.equals("2")) {
-				Integer codeResult = specificSize(specificSizeList02, 2, "3");
-				code = code + codeResult;
-			}
-
-			if (specificSizeList03.size() != 0 && executiveRanking.equals("3")) {
-				Integer codeResult = specificSize(specificSizeList03, 3, "3");
-				code = code + codeResult;
-			}
-
-			if (specificSizeList04.size() != 0 && executiveRanking.equals("4")) {
-				Integer codeResult = specificSize(specificSizeList04, 4, "3");
-				code = code + codeResult;
-			}
-
-			if (specificSizeList05.size() != 0 && executiveRanking.equals("5")) {
-				Integer codeResult = specificSize(specificSizeList05, 5, "3");
-				code = code + codeResult;
-			}
-
-			if (specificSizeList06.size() != 0 && executiveRanking.equals("6")) {
-				Integer codeResult = specificSize(specificSizeList06, 6, "3");
-				code = code + codeResult;
-			}
-
-			if (specificSizeList07.size() != 0 && executiveRanking.equals("7")) {
-				Integer codeResult = specificSize(specificSizeList07, 7, "3");
-				code = code + codeResult;
-			}
-
-			if (specificSizeList08.size() != 0 && executiveRanking.equals("8")) {
-				Integer codeResult = specificSize(specificSizeList08, 8, "3");
-				code = code + codeResult;
-			}
-
-			if (specificSizeList09.size() != 0 && executiveRanking.equals("9")) {
-				Integer codeResult = specificSize(specificSizeList09, 9, "3");
-				code = code + codeResult;
-			}
-
-			if (specificSizeList10.size() != 0 && executiveRanking.equals("10")) {
-				Integer codeResult = specificSize(specificSizeList10, 10, "3");
-				code = code + codeResult;
-			}
+//			if (specificSizeList02.size() != 0 && executiveRanking.equals("2")) {
+//				Integer codeResult = specificSize(specificSizeList02, 2, "3");
+//				code = code + codeResult;
+//			}
+//
+//			if (specificSizeList03.size() != 0 && executiveRanking.equals("3")) {
+//				Integer codeResult = specificSize(specificSizeList03, 3, "3");
+//				code = code + codeResult;
+//			}
+//
+//			if (specificSizeList04.size() != 0 && executiveRanking.equals("4")) {
+//				Integer codeResult = specificSize(specificSizeList04, 4, "3");
+//				code = code + codeResult;
+//			}
+//
+//			if (specificSizeList05.size() != 0 && executiveRanking.equals("5")) {
+//				Integer codeResult = specificSize(specificSizeList05, 5, "3");
+//				code = code + codeResult;
+//			}
+//
+//			if (specificSizeList06.size() != 0 && executiveRanking.equals("6")) {
+//				Integer codeResult = specificSize(specificSizeList06, 6, "3");
+//				code = code + codeResult;
+//			}
+//
+//			if (specificSizeList07.size() != 0 && executiveRanking.equals("7")) {
+//				Integer codeResult = specificSize(specificSizeList07, 7, "3");
+//				code = code + codeResult;
+//			}
+//
+//			if (specificSizeList08.size() != 0 && executiveRanking.equals("8")) {
+//				Integer codeResult = specificSize(specificSizeList08, 8, "3");
+//				code = code + codeResult;
+//			}
+//
+//			if (specificSizeList09.size() != 0 && executiveRanking.equals("9")) {
+//				Integer codeResult = specificSize(specificSizeList09, 9, "3");
+//				code = code + codeResult;
+//			}
+//
+//			if (specificSizeList10.size() != 0 && executiveRanking.equals("10")) {
+//				Integer codeResult = specificSize(specificSizeList10, 10, "3");
+//				code = code + codeResult;
+//			}
 
 			if (code > 0) {
 				// 如果有資料 則進行獲取的動作
@@ -780,6 +771,7 @@ public class Login {
 	}
 
 	public static boolean stegosaurusStrategyBet(ArrayList<Object> betList) throws InterruptedException {
+		// 執行存取每一筆開獎紀錄在catch
 
 		int period = (int) betList.get(0); // 開獎期數
 		int ranking = (int) betList.get(1);
@@ -789,19 +781,29 @@ public class Login {
 		int bitOrderMoneyint = stegosaurusBitMoney[codingPeriodCount - 1];
 
 		// 如果是到3週期時候 我們紀錄進去一筆
-		if (codingPeriodCount >= 3) {
+		if (codingPeriodCount == 3) {
+			LineNotify.callEvent(lineGoldenKey, "目前有一個高關數周期");
 			HashMap<Integer, int[]> betInformation = new HashMap<>();
 			// 名次 + 預測號碼
 			betInformation.put(ranking, betNumber);
 			// 期數 + 名次 + 號碼
 			highPassCount.put(betList.get(0).toString(), betInformation);
 		}
-		// http去撈取資料開講資料了
-		if (highPassCount.size() != 0) {
-			String beforePeriodOpenNumber = lotteryMap.get(period); // 過去開獎號碼
+		addlotteryNumberAndCycle();
+		int chPeriod = period - 1;
+		System.out.println("獲取上一個週期查詢是否有存在高關卡數的MAP 如果有則進行MAP當中比對 :" + chPeriod);
+		String periodStrNumber = String.valueOf(chPeriod);
+		if (periodStrNumber.length() < 3) {
+			periodStrNumber = "0" + periodStrNumber;
+		}
+		// 查看上一周期是否有在存取高關數的MAP資料
+		String beforePeriodOpenNumber = lotteryMap.get(periodStrNumber); // 過去開獎號碼
+		// http去撈取資料開講資料了 如果這裡沒有存取 則不進行比對的動作
+
+		if (beforePeriodOpenNumber != null) {
 			ArrayList<String> beNo = HandleNumber.numberConversionPage(beforePeriodOpenNumber);
-			HashMap<Integer, int[]> resultCatch = highPassCount.get(period); // 使用該期間號碼去查看是否有存在三碼以上
-			if (resultCatch.size() != 0) {
+			HashMap<Integer, int[]> resultCatch = highPassCount.get(periodStrNumber); // 使用該期間號碼去查看是否有存在三碼以上
+			if (resultCatch != null && resultCatch.size() != 0) {
 				// 代表有.. 該期有達到三次的預測下單策略
 				int key = 0;
 				// 拿取到KEy之後 拿到這個KEY 我才知道我下哪一個車道
@@ -814,28 +816,40 @@ public class Login {
 				String keyWordNumber = beforePeriodOpenList[key - 1];
 				System.out.println("取得上一期該車道的中獎號碼為" + keyWordNumber);
 				int keyWordNumberi = Integer.valueOf(keyWordNumber);
+
+				boolean isWhetherWin = false;
 				for (int element : resultAns) {
 					if (element == keyWordNumberi) {
-						System.out.println("代表有中獎不需要加碼........");
-					} else {
-						System.out.println("代表沒有中獎............");
+						isWhetherWin = true;
+						System.out.println("高關卡第幾期:" + periodStrNumber + " 中獎狀態為: 已中獎");
 					}
 				}
 
+				if (isWhetherWin == false) {
+					System.out.println("高關卡第幾期:" + periodStrNumber + " 中獎狀態為: 未中獎");
+					LineNotify.callEvent(lineGoldenKey, "高關卡第幾期:" + periodStrNumber + " 中獎狀態為: 未中獎");
+					stegosaurusOverweight += 1;
+				} else {
+					if (stegosaurusOverweight > 0) {
+						stegosaurusDismissal += 1;
+					}
+
+				}
+
+				if (stegosaurusDismissal >= 3) {
+					stegosaurusOverweight -= 1;
+					stegosaurusDismissal = 0;
+				}
+
+			} else {
+				System.out.println("目前map當中不存在資料過去的開獎資料，程式初始化中.. 正常");
 			}
-
-			// HTTP出去 回來開獎號碼
-
-			// 回滾 KEY 比對 中獎
-
-			// 中獎 //if() {
-			// highPassCount.remove
-			// }else{
-			/// 真正的掛了
-			// }
+		} else {
+			System.out.println("該期間:" + periodStrNumber + "未達三次條件以上故不進行取map比對動作...");
 
 		}
 
+//		stegosaurusOverweight+=1;
 		// 金額
 		// 代表總本金有進行加碼動作
 		if (stegosaurusOverweight > 0) {
@@ -937,7 +951,7 @@ public class Login {
 			webDriver.findElement(by);
 			return true;
 		} catch (Exception e) {
-			System.out.println("不存在此元素");
+			System.out.println("不存在此元素 : " + by);
 			return false;
 		}
 	}
@@ -948,5 +962,22 @@ public class Login {
 			result[i] = Integer.parseInt(s[i]);
 		}
 		return result;
+	}
+
+	/**
+	 * @author 點選進入時候的垃圾廣告
+	 * @param webObj
+	 * @throws InterruptedException
+	 */
+	public static void clickontheAnnouncement(WebDriver webObj) throws InterruptedException {
+		boolean closeIcon = isJudgingElement(webObj, By.xpath("//*[@id='app']/div/div[2]/div/div[6]"));
+		while (closeIcon) {
+			// 測試按鈕登入 如果還不存在 則持續搜尋
+			webObj.findElement(By.xpath("//div[@class='closeIcon']")).click();
+			closeIcon = isJudgingElement(webObj, By.xpath("//*[@id='app']/div/div[2]/div/div[6]"));
+			if (!closeIcon) {
+				break;
+			}
+		}
 	}
 }
