@@ -42,7 +42,7 @@ public class Login {
 	public static int stegosaurusOverweight = 0; // 劍龍加碼次數
 	public static int stegosaurusDismissal = 0; // 劍龍加碼次數
 	private static String WhetherSeal = "";
-	public static boolean stegosaurusAutomaticRenewal = true;
+
 	private static String lineGoldenKey;
 
 	// 高關數暫存 如果是三先存在在這等待判斷是否加碼
@@ -63,6 +63,11 @@ public class Login {
 
 	public static boolean stegosaurusstrategyTimeout = true;
 
+	// ************這些參數會因為在程式運行當中更改而改變的區域****************//
+	public static boolean sizeSingleAndDoubleCheckbox; // 官方網的大小單雙
+	public static boolean stegosaurusAutomaticRenewal; // 劍龍策略是否自動續單
+	// ****************************************//
+
 	public static void loginWEB(String readPath, String strategyName, HashMap<String, int[]> betList,
 			HashMap<String, Boolean> strategySwitch, HashMap<String, String> accPas,
 			HashMap<String, Object> otherParameters) throws Exception {
@@ -74,7 +79,10 @@ public class Login {
 			stegosaurusBitMoney = betList.get("stegosaurusBitMoney");
 			lineGoldenKey = otherParameters.get("lineGoldenKey").toString();
 			isTest = (boolean) otherParameters.get("isDemoRun");
+
+			sizeSingleAndDoubleCheckbox = (boolean) otherParameters.get("sizeSingleAndDoubleCheckbox");
 			stegosaurusAutomaticRenewal = (boolean) otherParameters.get("StegosaurusAutomaticRenewalinit");
+
 			// DriverFactory.getDriver().get("https://gs5528.com/#/home?sub=0");
 			webObj.get("https://gs5528.com/#/home?sub=0");
 			if (isTest) {
@@ -187,6 +195,11 @@ public class Login {
 								if (!WhetherSeal.equals("已封盤") && strategySwitch.get("airshipCheckBoxValue") == true) {
 									// 這裡直行友道的策略
 									youdaoStrategy(readPath);
+								}
+
+								// 官方網大小單雙
+								if (!WhetherSeal.equals("已封盤") && sizeSingleAndDoubleCheckbox == true) {
+
 								}
 
 								// 執行劍龍的策略

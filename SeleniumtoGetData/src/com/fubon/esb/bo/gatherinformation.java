@@ -38,6 +38,7 @@ public class gatherinformation {
 	private boolean StegosaurusAutomaticRenewalinit;
 	private String lineGoldenKey = ""; // LINE 金鑰匙
 	private String googleDriverPathStr = "";
+	private boolean sizeSingleAndDoubleCheckbox;
 
 	private JTextField delaySecondsText;
 	private JTextField strategyNameText;
@@ -121,6 +122,8 @@ public class gatherinformation {
 					strategySwitch.put("airshipCheckBoxValue", airshipCheckBoxValue);
 					strategySwitch.put("speedRacingCheckBoxValue", speedRacingCheckBoxValue);
 					strategySwitch.put("stegosaurusCheckBoxValue", stegosaurusCheckBoxValue);
+					strategySwitch.put("sizeSingleAndDoubleCheckbox", sizeSingleAndDoubleCheckbox);
+		
 
 					System.out.println("幸運飛艇是否打開值:" + airshipCheckBoxValue);
 					System.out.println("極速賽車是否有打開值:" + speedRacingCheckBoxValue);
@@ -137,6 +140,9 @@ public class gatherinformation {
 					otherParameters.put("StegosaurusAutomaticRenewalinit", StegosaurusAutomaticRenewalinit);
 					otherParameters.put("lineGoldenKey", lineGoldenKey);
 					otherParameters.put("googleDriverPathStr", googleDriverPathStr);
+					
+					
+				
 
 					try {
 						Login.loginWEB(path, strategyName, betList, strategySwitch, accPas, otherParameters);
@@ -293,10 +299,11 @@ public class gatherinformation {
 		springLayout.putConstraint(SpringLayout.WEST, lblVersion, 10, SpringLayout.WEST, frame.getContentPane());
 		frame.getContentPane().add(lblVersion);
 
-		JCheckBox checkBox = new JCheckBox("官網大小單雙");
-		springLayout.putConstraint(SpringLayout.WEST, checkBox, 6, SpringLayout.EAST, speedRacingCheckBox);
-		springLayout.putConstraint(SpringLayout.SOUTH, checkBox, 0, SpringLayout.SOUTH, luckyAirshipCheckBox);
-		frame.getContentPane().add(checkBox);
+		JCheckBox sizeSingleAndDouble = new JCheckBox("官網大小單雙");
+		springLayout.putConstraint(SpringLayout.WEST, sizeSingleAndDouble, 6, SpringLayout.EAST, speedRacingCheckBox);
+		springLayout.putConstraint(SpringLayout.SOUTH, sizeSingleAndDouble, 0, SpringLayout.SOUTH,
+				luckyAirshipCheckBox);
+		frame.getContentPane().add(sizeSingleAndDouble);
 
 		springLayout.putConstraint(SpringLayout.NORTH, stegosaurusCheckBox, 6, SpringLayout.SOUTH,
 				luckyAirshipCheckBox);
@@ -606,10 +613,12 @@ public class gatherinformation {
 					StegosaurusAutomaticRenewalinit = stegosaurusAutomaticRenewalCheckBox.isSelected();
 					lineGoldenKey = LINEGoldenKey.getText();
 					googleDriverPathStr = googleDriverPath.getText();
+					sizeSingleAndDoubleCheckbox = sizeSingleAndDouble.isSelected();
+
 				} catch (Exception e1) {
 
 				}
-			} 	
+			}
 		});
 	}
 
