@@ -74,14 +74,18 @@ public class Login {
 		try {
 
 			webObj = DriverFactory.getDriver(otherParameters.get("googleDriverPathStr").toString());
-			// 初始化地方
+			// 初始化金額
 			luckAirShipbitMoney = betList.get("luckAirshpBitMoney");
 			stegosaurusBitMoney = betList.get("stegosaurusBitMoney");
+			// 初始化金額
+			// 策略參數初始化
+			sizeSingleAndDoubleCheckbox = (boolean) strategySwitch.get("sizeSingleAndDoubleCheckbox");
+			// 策略參數初始化
+			// 其他參數初始化
+			stegosaurusAutomaticRenewal = (boolean) otherParameters.get("StegosaurusAutomaticRenewalinit");
 			lineGoldenKey = otherParameters.get("lineGoldenKey").toString();
 			isTest = (boolean) otherParameters.get("isDemoRun");
-
-			sizeSingleAndDoubleCheckbox = (boolean) otherParameters.get("sizeSingleAndDoubleCheckbox");
-			stegosaurusAutomaticRenewal = (boolean) otherParameters.get("StegosaurusAutomaticRenewalinit");
+			// 其他參數初始化
 
 			// DriverFactory.getDriver().get("https://gs5528.com/#/home?sub=0");
 			webObj.get("https://gs5528.com/#/home?sub=0");
@@ -119,7 +123,7 @@ public class Login {
 				}
 				webObj.findElement(By.xpath("//a[@class='yes']")).click();
 
-				Thread.sleep(1000);
+				Thread.sleep(2000);
 				clickontheAnnouncement(webObj);
 
 			} else {
@@ -178,7 +182,7 @@ public class Login {
 						}
 					}
 
-//					boolean resultIsStartTime = TimeJudgment.timeJudgment();
+					// boolean resultIsStartTime = TimeJudgment.timeJudgment();
 					if (true) {
 						SimpleDateFormat sdf = new SimpleDateFormat("HH:mm:ss");
 						String time = sdf.format(new Date());
@@ -326,53 +330,53 @@ public class Login {
 				for (Integer bitNo : issueForecastNumber) {
 					switch (bitNo) {
 					case 1:
-						webObj.findElement(By.xpath(
-								"//*[@id='betWrapper']/div[2]/div/div[1]/div[2]/div/div[1]/table[1]/tbody/tr[1]/td[3]/input"))
+						webObj.findElement(By
+								.xpath("//*[@id='betWrapper']/div[2]/div/div[1]/div[2]/div/div[1]/table[1]/tbody/tr[1]/td[3]/input"))
 								.sendKeys(bitOrderMoneyStr);
 						break;
 					case 2:
-						webObj.findElement(By.xpath(
-								"//*[@id='betWrapper']/div[2]/div/div[1]/div[2]/div/div[1]/table[1]/tbody/tr[2]/td[3]/input"))
+						webObj.findElement(By
+								.xpath("//*[@id='betWrapper']/div[2]/div/div[1]/div[2]/div/div[1]/table[1]/tbody/tr[2]/td[3]/input"))
 								.sendKeys(bitOrderMoneyStr);
 						break;
 					case 3:
-						webObj.findElement(By.xpath(
-								"//*[@id='betWrapper']/div[2]/div/div[1]/div[2]/div/div[1]/table[1]/tbody/tr[3]/td[3]/input"))
+						webObj.findElement(By
+								.xpath("//*[@id='betWrapper']/div[2]/div/div[1]/div[2]/div/div[1]/table[1]/tbody/tr[3]/td[3]/input"))
 								.sendKeys(bitOrderMoneyStr);
 						break;
 					case 4:
-						webObj.findElement(By.xpath(
-								"//*[@id='betWrapper']/div[2]/div/div[1]/div[2]/div/div[1]/table[1]/tbody/tr[4]/td[3]/input"))
+						webObj.findElement(By
+								.xpath("//*[@id='betWrapper']/div[2]/div/div[1]/div[2]/div/div[1]/table[1]/tbody/tr[4]/td[3]/input"))
 								.sendKeys(bitOrderMoneyStr);
 						break;
 					case 5:
-						webObj.findElement(By.xpath(
-								"//*[@id='betWrapper']/div[2]/div/div[1]/div[2]/div/div[1]/table[1]/tbody/tr[5]/td[3]/input"))
+						webObj.findElement(By
+								.xpath("//*[@id='betWrapper']/div[2]/div/div[1]/div[2]/div/div[1]/table[1]/tbody/tr[5]/td[3]/input"))
 								.sendKeys(bitOrderMoneyStr);
 						break;
 					case 6:
-						webObj.findElement(By.xpath(
-								"//*[@id='betWrapper']/div[2]/div/div[1]/div[2]/div/div[1]/table[1]/tbody/tr[6]/td[3]/input"))
+						webObj.findElement(By
+								.xpath("//*[@id='betWrapper']/div[2]/div/div[1]/div[2]/div/div[1]/table[1]/tbody/tr[6]/td[3]/input"))
 								.sendKeys(bitOrderMoneyStr);
 						break;
 					case 7:
-						webObj.findElement(By.xpath(
-								"//*[@id='betWrapper']/div[2]/div/div[1]/div[2]/div/div[1]/table[1]/tbody/tr[7]/td[3]/input"))
+						webObj.findElement(By
+								.xpath("//*[@id='betWrapper']/div[2]/div/div[1]/div[2]/div/div[1]/table[1]/tbody/tr[7]/td[3]/input"))
 								.sendKeys(bitOrderMoneyStr);
 						break;
 					case 8:
-						webObj.findElement(By.xpath(
-								"//*[@id='betWrapper']/div[2]/div/div[1]/div[2]/div/div[1]/table[1]/tbody/tr[8]/td[3]/input"))
+						webObj.findElement(By
+								.xpath("//*[@id='betWrapper']/div[2]/div/div[1]/div[2]/div/div[1]/table[1]/tbody/tr[8]/td[3]/input"))
 								.sendKeys(bitOrderMoneyStr);
 						break;
 					case 9:
-						webObj.findElement(By.xpath(
-								"//*[@id='betWrapper']/div[2]/div/div[1]/div[2]/div/div[1]/table[1]/tbody/tr[9]/td[3]/input"))
+						webObj.findElement(By
+								.xpath("//*[@id='betWrapper']/div[2]/div/div[1]/div[2]/div/div[1]/table[1]/tbody/tr[9]/td[3]/input"))
 								.sendKeys(bitOrderMoneyStr);
 						break;
 					case 10:
-						webObj.findElement(By.xpath(
-								"//*[@id='betWrapper']/div[2]/div/div[1]/div[2]/div/div[1]/table[1]/tbody/tr[10]/td[3]/input"))
+						webObj.findElement(By
+								.xpath("//*[@id='betWrapper']/div[2]/div/div[1]/div[2]/div/div[1]/table[1]/tbody/tr[10]/td[3]/input"))
 								.sendKeys(bitOrderMoneyStr);
 						break;
 
@@ -502,50 +506,59 @@ public class Login {
 				// 判断转换一 是否成功
 			}
 
-//			if (specificSizeList02.size() != 0 && executiveRanking.equals("2")) {
-//				Integer codeResult = specificSize(specificSizeList02, 2, "3");
-//				code = code + codeResult;
-//			}
-//
-//			if (specificSizeList03.size() != 0 && executiveRanking.equals("3")) {
-//				Integer codeResult = specificSize(specificSizeList03, 3, "3");
-//				code = code + codeResult;
-//			}
-//
-//			if (specificSizeList04.size() != 0 && executiveRanking.equals("4")) {
-//				Integer codeResult = specificSize(specificSizeList04, 4, "3");
-//				code = code + codeResult;
-//			}
-//
-//			if (specificSizeList05.size() != 0 && executiveRanking.equals("5")) {
-//				Integer codeResult = specificSize(specificSizeList05, 5, "3");
-//				code = code + codeResult;
-//			}
-//
-//			if (specificSizeList06.size() != 0 && executiveRanking.equals("6")) {
-//				Integer codeResult = specificSize(specificSizeList06, 6, "3");
-//				code = code + codeResult;
-//			}
-//
-//			if (specificSizeList07.size() != 0 && executiveRanking.equals("7")) {
-//				Integer codeResult = specificSize(specificSizeList07, 7, "3");
-//				code = code + codeResult;
-//			}
-//
-//			if (specificSizeList08.size() != 0 && executiveRanking.equals("8")) {
-//				Integer codeResult = specificSize(specificSizeList08, 8, "3");
-//				code = code + codeResult;
-//			}
-//
-//			if (specificSizeList09.size() != 0 && executiveRanking.equals("9")) {
-//				Integer codeResult = specificSize(specificSizeList09, 9, "3");
-//				code = code + codeResult;
-//			}
-//
-//			if (specificSizeList10.size() != 0 && executiveRanking.equals("10")) {
-//				Integer codeResult = specificSize(specificSizeList10, 10, "3");
-//				code = code + codeResult;
-//			}
+			// if (specificSizeList02.size() != 0 &&
+			// executiveRanking.equals("2")) {
+			// Integer codeResult = specificSize(specificSizeList02, 2, "3");
+			// code = code + codeResult;
+			// }
+			//
+			// if (specificSizeList03.size() != 0 &&
+			// executiveRanking.equals("3")) {
+			// Integer codeResult = specificSize(specificSizeList03, 3, "3");
+			// code = code + codeResult;
+			// }
+			//
+			// if (specificSizeList04.size() != 0 &&
+			// executiveRanking.equals("4")) {
+			// Integer codeResult = specificSize(specificSizeList04, 4, "3");
+			// code = code + codeResult;
+			// }
+			//
+			// if (specificSizeList05.size() != 0 &&
+			// executiveRanking.equals("5")) {
+			// Integer codeResult = specificSize(specificSizeList05, 5, "3");
+			// code = code + codeResult;
+			// }
+			//
+			// if (specificSizeList06.size() != 0 &&
+			// executiveRanking.equals("6")) {
+			// Integer codeResult = specificSize(specificSizeList06, 6, "3");
+			// code = code + codeResult;
+			// }
+			//
+			// if (specificSizeList07.size() != 0 &&
+			// executiveRanking.equals("7")) {
+			// Integer codeResult = specificSize(specificSizeList07, 7, "3");
+			// code = code + codeResult;
+			// }
+			//
+			// if (specificSizeList08.size() != 0 &&
+			// executiveRanking.equals("8")) {
+			// Integer codeResult = specificSize(specificSizeList08, 8, "3");
+			// code = code + codeResult;
+			// }
+			//
+			// if (specificSizeList09.size() != 0 &&
+			// executiveRanking.equals("9")) {
+			// Integer codeResult = specificSize(specificSizeList09, 9, "3");
+			// code = code + codeResult;
+			// }
+			//
+			// if (specificSizeList10.size() != 0 &&
+			// executiveRanking.equals("10")) {
+			// Integer codeResult = specificSize(specificSizeList10, 10, "3");
+			// code = code + codeResult;
+			// }
 
 			if (code > 0) {
 				// 如果有資料 則進行獲取的動作
@@ -862,7 +875,7 @@ public class Login {
 
 		}
 
-//		stegosaurusOverweight+=1;
+		// stegosaurusOverweight+=1;
 		// 金額
 		// 代表總本金有進行加碼動作
 		if (stegosaurusOverweight > 0) {
@@ -892,53 +905,53 @@ public class Login {
 			for (Integer bitNo : betNumber) {
 				switch (bitNo) {
 				case 1:
-					webObj.findElement(By.xpath(
-							"//*[@id='betWrapper']/div[2]/div/div[1]/div[2]/div/div[1]/table[1]/tbody/tr[1]/td[3]/input"))
+					webObj.findElement(By
+							.xpath("//*[@id='betWrapper']/div[2]/div/div[1]/div[2]/div/div[1]/table[1]/tbody/tr[1]/td[3]/input"))
 							.sendKeys(bitOrderMoneyStr);
 					break;
 				case 2:
-					webObj.findElement(By.xpath(
-							"//*[@id='betWrapper']/div[2]/div/div[1]/div[2]/div/div[1]/table[1]/tbody/tr[2]/td[3]/input"))
+					webObj.findElement(By
+							.xpath("//*[@id='betWrapper']/div[2]/div/div[1]/div[2]/div/div[1]/table[1]/tbody/tr[2]/td[3]/input"))
 							.sendKeys(bitOrderMoneyStr);
 					break;
 				case 3:
-					webObj.findElement(By.xpath(
-							"//*[@id='betWrapper']/div[2]/div/div[1]/div[2]/div/div[1]/table[1]/tbody/tr[3]/td[3]/input"))
+					webObj.findElement(By
+							.xpath("//*[@id='betWrapper']/div[2]/div/div[1]/div[2]/div/div[1]/table[1]/tbody/tr[3]/td[3]/input"))
 							.sendKeys(bitOrderMoneyStr);
 					break;
 				case 4:
-					webObj.findElement(By.xpath(
-							"//*[@id='betWrapper']/div[2]/div/div[1]/div[2]/div/div[1]/table[1]/tbody/tr[4]/td[3]/input"))
+					webObj.findElement(By
+							.xpath("//*[@id='betWrapper']/div[2]/div/div[1]/div[2]/div/div[1]/table[1]/tbody/tr[4]/td[3]/input"))
 							.sendKeys(bitOrderMoneyStr);
 					break;
 				case 5:
-					webObj.findElement(By.xpath(
-							"//*[@id='betWrapper']/div[2]/div/div[1]/div[2]/div/div[1]/table[1]/tbody/tr[5]/td[3]/input"))
+					webObj.findElement(By
+							.xpath("//*[@id='betWrapper']/div[2]/div/div[1]/div[2]/div/div[1]/table[1]/tbody/tr[5]/td[3]/input"))
 							.sendKeys(bitOrderMoneyStr);
 					break;
 				case 6:
-					webObj.findElement(By.xpath(
-							"//*[@id='betWrapper']/div[2]/div/div[1]/div[2]/div/div[1]/table[1]/tbody/tr[6]/td[3]/input"))
+					webObj.findElement(By
+							.xpath("//*[@id='betWrapper']/div[2]/div/div[1]/div[2]/div/div[1]/table[1]/tbody/tr[6]/td[3]/input"))
 							.sendKeys(bitOrderMoneyStr);
 					break;
 				case 7:
-					webObj.findElement(By.xpath(
-							"//*[@id='betWrapper']/div[2]/div/div[1]/div[2]/div/div[1]/table[1]/tbody/tr[7]/td[3]/input"))
+					webObj.findElement(By
+							.xpath("//*[@id='betWrapper']/div[2]/div/div[1]/div[2]/div/div[1]/table[1]/tbody/tr[7]/td[3]/input"))
 							.sendKeys(bitOrderMoneyStr);
 					break;
 				case 8:
-					webObj.findElement(By.xpath(
-							"//*[@id='betWrapper']/div[2]/div/div[1]/div[2]/div/div[1]/table[1]/tbody/tr[8]/td[3]/input"))
+					webObj.findElement(By
+							.xpath("//*[@id='betWrapper']/div[2]/div/div[1]/div[2]/div/div[1]/table[1]/tbody/tr[8]/td[3]/input"))
 							.sendKeys(bitOrderMoneyStr);
 					break;
 				case 9:
-					webObj.findElement(By.xpath(
-							"//*[@id='betWrapper']/div[2]/div/div[1]/div[2]/div/div[1]/table[1]/tbody/tr[9]/td[3]/input"))
+					webObj.findElement(By
+							.xpath("//*[@id='betWrapper']/div[2]/div/div[1]/div[2]/div/div[1]/table[1]/tbody/tr[9]/td[3]/input"))
 							.sendKeys(bitOrderMoneyStr);
 					break;
 				case 10:
-					webObj.findElement(By.xpath(
-							"//*[@id='betWrapper']/div[2]/div/div[1]/div[2]/div/div[1]/table[1]/tbody/tr[10]/td[3]/input"))
+					webObj.findElement(By
+							.xpath("//*[@id='betWrapper']/div[2]/div/div[1]/div[2]/div/div[1]/table[1]/tbody/tr[10]/td[3]/input"))
 							.sendKeys(bitOrderMoneyStr);
 					break;
 

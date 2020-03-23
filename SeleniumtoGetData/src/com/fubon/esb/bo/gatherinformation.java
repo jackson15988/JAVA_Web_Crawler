@@ -1,10 +1,15 @@
 package com.fubon.esb.bo;
 
-import java.awt.EventQueue;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
 import java.io.File;
+import java.io.FileInputStream;
+import java.io.FileNotFoundException;
+import java.io.IOException;
+import java.io.InputStream;
+import java.util.Date;
 import java.util.HashMap;
+import java.util.Properties;
 
 import javax.swing.JButton;
 import javax.swing.JCheckBox;
@@ -22,7 +27,7 @@ import com.fubon.esb.util.LineNotify;
 public class gatherinformation {
 
 	private JFrame frame;
-	private JTextField readPathText;
+	private static JTextField readPathText;
 
 	private static String path = "";
 	private static String sec = "";
@@ -40,33 +45,29 @@ public class gatherinformation {
 	private String googleDriverPathStr = "";
 	private boolean sizeSingleAndDoubleCheckbox;
 
-	private JTextField delaySecondsText;
-	private JTextField strategyNameText;
-	private JTextField luckyAirshipOrderAmount; // 幸運飛艇下單金額
-	private JTextField carOrderAmount; // 極速賽車下單金額
+	private static JTextField delaySecondsText;
+	private static JTextField strategyNameText;
+	private static JTextField luckyAirshipOrderAmount; // 幸運飛艇下單金額
+	private static JTextField carOrderAmount; // 極速賽車下單金額
 	private JTextField checkAccount; // 檢核帳號
 	private String version = "V1.3.14";
 	private JTextField textField;
-	private JTextField stegosaurusBitMony;
-	private JTextField stegosaurusDoubletext;
+	private static JTextField stegosaurusBitMony;
+	private static JTextField stegosaurusDoubletext;
 	private JPasswordField passwordField;
-	private JTextField LINEGoldenKey;
-	private JTextField googleDriverPath;
+	private static JTextField LINEGoldenKey;
+	private static JTextField googleDriverPath;
 
 	/**
 	 * Launch the application.
 	 */
 	public static void main(String[] args) {
-		EventQueue.invokeLater(new Runnable() {
-			public void run() {
-				try {
-					gatherinformation window = new gatherinformation();
-					window.frame.setVisible(true);
-				} catch (Exception e) {
-					e.printStackTrace();
-				}
-			}
-		});
+		try {
+			getPropValues("C:/Users/IMI-JAVA-Ryan/Desktop/gould.txt");
+		} catch (IOException e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		}
 	}
 
 	/**
@@ -123,7 +124,6 @@ public class gatherinformation {
 					strategySwitch.put("speedRacingCheckBoxValue", speedRacingCheckBoxValue);
 					strategySwitch.put("stegosaurusCheckBoxValue", stegosaurusCheckBoxValue);
 					strategySwitch.put("sizeSingleAndDoubleCheckbox", sizeSingleAndDoubleCheckbox);
-		
 
 					System.out.println("幸運飛艇是否打開值:" + airshipCheckBoxValue);
 					System.out.println("極速賽車是否有打開值:" + speedRacingCheckBoxValue);
@@ -140,9 +140,6 @@ public class gatherinformation {
 					otherParameters.put("StegosaurusAutomaticRenewalinit", StegosaurusAutomaticRenewalinit);
 					otherParameters.put("lineGoldenKey", lineGoldenKey);
 					otherParameters.put("googleDriverPathStr", googleDriverPathStr);
-					
-					
-				
 
 					try {
 						Login.loginWEB(path, strategyName, betList, strategySwitch, accPas, otherParameters);
@@ -629,4 +626,40 @@ public class gatherinformation {
 		}
 		return result;
 	}
+
+	public static String getPropValues(String propetersPath) throws IOException {
+		InputStream inputStream = null;
+		String result = "";
+		try {
+			Properties prop = new Properties();
+			String propFileName = "config.properties";
+
+			inputStream = new FileInputStream(propetersPath);
+
+			if (inputStream != null) {
+				prop.load(inputStream);
+			} else {
+				throw new FileNotFoundException("property file '" + propFileName + "' not found in the classpath");
+			}
+
+			Date time = new Date(System.currentTimeMillis());
+			readPathText.setText(prop.getProperty("readPathText"));
+			delaySecondsText.setText(prop.getProperty("readPathText"));
+			strategyNameText.setText(prop.getProperty("readPathText"));
+			luckyAirshipOrderAmount.setText(prop.getProperty("readPathText"));
+			carOrderAmount.setText(prop.getProperty("readPathText"));
+			stegosaurusBitMony.setText(prop.getProperty("readPathText"));
+			stegosaurusDoubletext.setText(prop.getProperty("readPathText"));
+			LINEGoldenKey.setText(prop.getProperty("readPathText"));
+			googleDriverPath.setText(prop.getProperty("readPathText"));
+
+			result = "";
+		} catch (Exception e) {
+			System.out.println("Exception: " + e);
+		} finally {
+			inputStream.close();
+		}
+		return result;
+	}
+
 }
