@@ -653,7 +653,6 @@ public class gatherinformation {
 			LINEGoldenKey.setText(prop.getProperty("readPathText"));
 			googleDriverPath.setText(prop.getProperty("readPathText"));
 //
-			///
 			result = "";
 		} catch (Exception e) {
 			System.out.println("Exception: " + e);
