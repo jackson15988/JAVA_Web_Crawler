@@ -116,11 +116,12 @@ public class Login {
 				while (!yesButton) {
 					// 測試按鈕登入 如果還不存在 則持續搜尋
 					isInit = isJudgingElement(webObj, By.xpath("//a[@class='yes']"));
-					Thread.sleep(500);
+					Thread.sleep(1000);
 					if (isInit) {
 						break;
 					}
 				}
+				Thread.sleep(1000);
 				//
 				webObj.findElement(By.xpath("//a[@class='yes']")).click();
 
@@ -220,7 +221,7 @@ public class Login {
 								e.printStackTrace();
 							}
 						} else {
-							System.out.println("未達進入判斷分鐘數");
+
 						}
 					} else {
 						System.out.println("系統還未達到開始開盤的時間-- 或已經結束時間");
@@ -331,53 +332,53 @@ public class Login {
 				for (Integer bitNo : issueForecastNumber) {
 					switch (bitNo) {
 					case 1:
-						webObj.findElement(By
-								.xpath("//*[@id='betWrapper']/div[2]/div/div[1]/div[2]/div/div[1]/table[1]/tbody/tr[1]/td[3]/input"))
+						webObj.findElement(By.xpath(
+								"//*[@id='betWrapper']/div[2]/div/div[1]/div[2]/div/div[1]/table[1]/tbody/tr[1]/td[3]/input"))
 								.sendKeys(bitOrderMoneyStr);
 						break;
 					case 2:
-						webObj.findElement(By
-								.xpath("//*[@id='betWrapper']/div[2]/div/div[1]/div[2]/div/div[1]/table[1]/tbody/tr[2]/td[3]/input"))
+						webObj.findElement(By.xpath(
+								"//*[@id='betWrapper']/div[2]/div/div[1]/div[2]/div/div[1]/table[1]/tbody/tr[2]/td[3]/input"))
 								.sendKeys(bitOrderMoneyStr);
 						break;
 					case 3:
-						webObj.findElement(By
-								.xpath("//*[@id='betWrapper']/div[2]/div/div[1]/div[2]/div/div[1]/table[1]/tbody/tr[3]/td[3]/input"))
+						webObj.findElement(By.xpath(
+								"//*[@id='betWrapper']/div[2]/div/div[1]/div[2]/div/div[1]/table[1]/tbody/tr[3]/td[3]/input"))
 								.sendKeys(bitOrderMoneyStr);
 						break;
 					case 4:
-						webObj.findElement(By
-								.xpath("//*[@id='betWrapper']/div[2]/div/div[1]/div[2]/div/div[1]/table[1]/tbody/tr[4]/td[3]/input"))
+						webObj.findElement(By.xpath(
+								"//*[@id='betWrapper']/div[2]/div/div[1]/div[2]/div/div[1]/table[1]/tbody/tr[4]/td[3]/input"))
 								.sendKeys(bitOrderMoneyStr);
 						break;
 					case 5:
-						webObj.findElement(By
-								.xpath("//*[@id='betWrapper']/div[2]/div/div[1]/div[2]/div/div[1]/table[1]/tbody/tr[5]/td[3]/input"))
+						webObj.findElement(By.xpath(
+								"//*[@id='betWrapper']/div[2]/div/div[1]/div[2]/div/div[1]/table[1]/tbody/tr[5]/td[3]/input"))
 								.sendKeys(bitOrderMoneyStr);
 						break;
 					case 6:
-						webObj.findElement(By
-								.xpath("//*[@id='betWrapper']/div[2]/div/div[1]/div[2]/div/div[1]/table[1]/tbody/tr[6]/td[3]/input"))
+						webObj.findElement(By.xpath(
+								"//*[@id='betWrapper']/div[2]/div/div[1]/div[2]/div/div[1]/table[1]/tbody/tr[6]/td[3]/input"))
 								.sendKeys(bitOrderMoneyStr);
 						break;
 					case 7:
-						webObj.findElement(By
-								.xpath("//*[@id='betWrapper']/div[2]/div/div[1]/div[2]/div/div[1]/table[1]/tbody/tr[7]/td[3]/input"))
+						webObj.findElement(By.xpath(
+								"//*[@id='betWrapper']/div[2]/div/div[1]/div[2]/div/div[1]/table[1]/tbody/tr[7]/td[3]/input"))
 								.sendKeys(bitOrderMoneyStr);
 						break;
 					case 8:
-						webObj.findElement(By
-								.xpath("//*[@id='betWrapper']/div[2]/div/div[1]/div[2]/div/div[1]/table[1]/tbody/tr[8]/td[3]/input"))
+						webObj.findElement(By.xpath(
+								"//*[@id='betWrapper']/div[2]/div/div[1]/div[2]/div/div[1]/table[1]/tbody/tr[8]/td[3]/input"))
 								.sendKeys(bitOrderMoneyStr);
 						break;
 					case 9:
-						webObj.findElement(By
-								.xpath("//*[@id='betWrapper']/div[2]/div/div[1]/div[2]/div/div[1]/table[1]/tbody/tr[9]/td[3]/input"))
+						webObj.findElement(By.xpath(
+								"//*[@id='betWrapper']/div[2]/div/div[1]/div[2]/div/div[1]/table[1]/tbody/tr[9]/td[3]/input"))
 								.sendKeys(bitOrderMoneyStr);
 						break;
 					case 10:
-						webObj.findElement(By
-								.xpath("//*[@id='betWrapper']/div[2]/div/div[1]/div[2]/div/div[1]/table[1]/tbody/tr[10]/td[3]/input"))
+						webObj.findElement(By.xpath(
+								"//*[@id='betWrapper']/div[2]/div/div[1]/div[2]/div/div[1]/table[1]/tbody/tr[10]/td[3]/input"))
 								.sendKeys(bitOrderMoneyStr);
 						break;
 
@@ -507,11 +508,10 @@ public class Login {
 				// 判断转换一 是否成功
 			}
 
-			// if (specificSizeList02.size() != 0 &&
-			// executiveRanking.equals("2")) {
-			// Integer codeResult = specificSize(specificSizeList02, 2, "3");
-			// code = code + codeResult;
-			// }
+//			if (specificSizeList02.size() != 0 && executiveRanking.equals("2")) {
+//				Integer codeResult = specificSize(specificSizeList02, 2, "3");
+//				code = code + codeResult;
+//			}
 			//
 			// if (specificSizeList03.size() != 0 &&
 			// executiveRanking.equals("3")) {
@@ -848,7 +848,7 @@ public class Login {
 				for (int element : resultAns) {
 					if (element == keyWordNumberi) {
 						isWhetherWin = true;
-						System.out.println("高關卡第幾期:" + periodStrNumber + " 中獎狀態為: 已中獎");
+						LineNotify.callEvent(lineGoldenKey, "高關卡第幾期:" + periodStrNumber + " 中獎狀態為: 已中獎");
 					}
 				}
 
@@ -906,53 +906,53 @@ public class Login {
 			for (Integer bitNo : betNumber) {
 				switch (bitNo) {
 				case 1:
-					webObj.findElement(By
-							.xpath("//*[@id='betWrapper']/div[2]/div/div[1]/div[2]/div/div[1]/table[1]/tbody/tr[1]/td[3]/input"))
+					webObj.findElement(By.xpath(
+							"//*[@id='betWrapper']/div[2]/div/div[1]/div[2]/div/div[1]/table[1]/tbody/tr[1]/td[3]/input"))
 							.sendKeys(bitOrderMoneyStr);
 					break;
 				case 2:
-					webObj.findElement(By
-							.xpath("//*[@id='betWrapper']/div[2]/div/div[1]/div[2]/div/div[1]/table[1]/tbody/tr[2]/td[3]/input"))
+					webObj.findElement(By.xpath(
+							"//*[@id='betWrapper']/div[2]/div/div[1]/div[2]/div/div[1]/table[1]/tbody/tr[2]/td[3]/input"))
 							.sendKeys(bitOrderMoneyStr);
 					break;
 				case 3:
-					webObj.findElement(By
-							.xpath("//*[@id='betWrapper']/div[2]/div/div[1]/div[2]/div/div[1]/table[1]/tbody/tr[3]/td[3]/input"))
+					webObj.findElement(By.xpath(
+							"//*[@id='betWrapper']/div[2]/div/div[1]/div[2]/div/div[1]/table[1]/tbody/tr[3]/td[3]/input"))
 							.sendKeys(bitOrderMoneyStr);
 					break;
 				case 4:
-					webObj.findElement(By
-							.xpath("//*[@id='betWrapper']/div[2]/div/div[1]/div[2]/div/div[1]/table[1]/tbody/tr[4]/td[3]/input"))
+					webObj.findElement(By.xpath(
+							"//*[@id='betWrapper']/div[2]/div/div[1]/div[2]/div/div[1]/table[1]/tbody/tr[4]/td[3]/input"))
 							.sendKeys(bitOrderMoneyStr);
 					break;
 				case 5:
-					webObj.findElement(By
-							.xpath("//*[@id='betWrapper']/div[2]/div/div[1]/div[2]/div/div[1]/table[1]/tbody/tr[5]/td[3]/input"))
+					webObj.findElement(By.xpath(
+							"//*[@id='betWrapper']/div[2]/div/div[1]/div[2]/div/div[1]/table[1]/tbody/tr[5]/td[3]/input"))
 							.sendKeys(bitOrderMoneyStr);
 					break;
 				case 6:
-					webObj.findElement(By
-							.xpath("//*[@id='betWrapper']/div[2]/div/div[1]/div[2]/div/div[1]/table[1]/tbody/tr[6]/td[3]/input"))
+					webObj.findElement(By.xpath(
+							"//*[@id='betWrapper']/div[2]/div/div[1]/div[2]/div/div[1]/table[1]/tbody/tr[6]/td[3]/input"))
 							.sendKeys(bitOrderMoneyStr);
 					break;
 				case 7:
-					webObj.findElement(By
-							.xpath("//*[@id='betWrapper']/div[2]/div/div[1]/div[2]/div/div[1]/table[1]/tbody/tr[7]/td[3]/input"))
+					webObj.findElement(By.xpath(
+							"//*[@id='betWrapper']/div[2]/div/div[1]/div[2]/div/div[1]/table[1]/tbody/tr[7]/td[3]/input"))
 							.sendKeys(bitOrderMoneyStr);
 					break;
 				case 8:
-					webObj.findElement(By
-							.xpath("//*[@id='betWrapper']/div[2]/div/div[1]/div[2]/div/div[1]/table[1]/tbody/tr[8]/td[3]/input"))
+					webObj.findElement(By.xpath(
+							"//*[@id='betWrapper']/div[2]/div/div[1]/div[2]/div/div[1]/table[1]/tbody/tr[8]/td[3]/input"))
 							.sendKeys(bitOrderMoneyStr);
 					break;
 				case 9:
-					webObj.findElement(By
-							.xpath("//*[@id='betWrapper']/div[2]/div/div[1]/div[2]/div/div[1]/table[1]/tbody/tr[9]/td[3]/input"))
+					webObj.findElement(By.xpath(
+							"//*[@id='betWrapper']/div[2]/div/div[1]/div[2]/div/div[1]/table[1]/tbody/tr[9]/td[3]/input"))
 							.sendKeys(bitOrderMoneyStr);
 					break;
 				case 10:
-					webObj.findElement(By
-							.xpath("//*[@id='betWrapper']/div[2]/div/div[1]/div[2]/div/div[1]/table[1]/tbody/tr[10]/td[3]/input"))
+					webObj.findElement(By.xpath(
+							"//*[@id='betWrapper']/div[2]/div/div[1]/div[2]/div/div[1]/table[1]/tbody/tr[10]/td[3]/input"))
 							.sendKeys(bitOrderMoneyStr);
 					break;
 
