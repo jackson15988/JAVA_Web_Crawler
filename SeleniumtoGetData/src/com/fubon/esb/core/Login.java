@@ -196,7 +196,7 @@ public class Login {
 							try {
 								//
 								System.out.println("正在接收彩哥哥資訊，先等待30秒!!!．．．．．");
-								Thread.sleep(60 * 1000);
+								Thread.sleep(30 * 1000);
 
 								if (!WhetherSeal.equals("已封盤") && strategySwitch.get("airshipCheckBoxValue") == true) {
 									// 這裡直行友道的策略
@@ -820,11 +820,12 @@ public class Login {
 		int chPeriod = period - 1;
 		System.out.println("獲取上一個週期查詢是否有存在高關卡數的MAP 如果有則進行MAP當中比對 :" + chPeriod);
 		String periodStrNumber = String.valueOf(chPeriod);
+		String briefStrNumber = "";
 		if (periodStrNumber.length() < 3) {
-			periodStrNumber = "0" + periodStrNumber;
+			briefStrNumber = "0" + periodStrNumber;
 		}
 		// 查看上一周期是否有在存取高關數的MAP資料
-		String beforePeriodOpenNumber = lotteryMap.get(periodStrNumber); // 過去開獎號碼
+		String beforePeriodOpenNumber = lotteryMap.get(briefStrNumber); // 過去開獎號碼
 		// http去撈取資料開講資料了 如果這裡沒有存取 則不進行比對的動作
 
 		if (beforePeriodOpenNumber != null) {
