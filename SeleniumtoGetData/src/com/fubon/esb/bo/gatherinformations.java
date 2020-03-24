@@ -7,7 +7,7 @@ import java.io.File;
 import java.io.FileInputStream;
 import java.io.FileNotFoundException;
 import java.io.IOException;
-import java.io.InputStream;
+import java.io.InputStreamReader;
 import java.util.Date;
 import java.util.HashMap;
 import java.util.Properties;
@@ -25,7 +25,7 @@ import javax.swing.SpringLayout;
 import com.fubon.esb.core.Login;
 import com.fubon.esb.util.LineNotify;
 
-public class gatherinformation {
+public class gatherinformations {
 
 	private JFrame frame;
 	private static JTextField readPathText;
@@ -66,7 +66,7 @@ public class gatherinformation {
 		EventQueue.invokeLater(new Runnable() {
 			public void run() {
 				try {
-					gatherinformation window = new gatherinformation();
+					gatherinformations window = new gatherinformations();
 					window.frame.setVisible(true);
 				} catch (Exception e) {
 					e.printStackTrace();
@@ -78,7 +78,7 @@ public class gatherinformation {
 	/**
 	 * Create the application.
 	 */
-	public gatherinformation() {
+	public gatherinformations() {
 		initialize();
 	}
 
@@ -100,6 +100,7 @@ public class gatherinformation {
 		frame.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
 		SpringLayout springLayout = new SpringLayout();
 		springLayout.putConstraint(SpringLayout.NORTH, delaySecondsText, 1, SpringLayout.NORTH, luckyAirshipCheckBox);
+		springLayout.putConstraint(SpringLayout.EAST, delaySecondsText, -34, SpringLayout.EAST, frame.getContentPane());
 		springLayout.putConstraint(SpringLayout.WEST, readPathText, 126, SpringLayout.WEST, frame.getContentPane());
 		springLayout.putConstraint(SpringLayout.NORTH, strategyNameText, 14, SpringLayout.SOUTH, readPathText);
 		springLayout.putConstraint(SpringLayout.EAST, strategyNameText, 0, SpringLayout.EAST, readPathText);
@@ -107,7 +108,8 @@ public class gatherinformation {
 		frame.getContentPane().setLayout(springLayout);
 
 		JButton srartbutton = new JButton("開始運行");
-		springLayout.putConstraint(SpringLayout.WEST, srartbutton, 439, SpringLayout.WEST, frame.getContentPane());
+		springLayout.putConstraint(SpringLayout.SOUTH, srartbutton, -10, SpringLayout.SOUTH, frame.getContentPane());
+		springLayout.putConstraint(SpringLayout.EAST, srartbutton, -349, SpringLayout.EAST, frame.getContentPane());
 		frame.getContentPane().add(srartbutton);
 		srartbutton.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent e) {
@@ -163,16 +165,12 @@ public class gatherinformation {
 		});
 
 		JButton btnNewsaveSettings = new JButton("停止運行");
-		springLayout.putConstraint(SpringLayout.EAST, delaySecondsText, 0, SpringLayout.EAST, btnNewsaveSettings);
-		JLabel AirshipOrderText = new JLabel("極速賽車下單順序");
-		springLayout.putConstraint(SpringLayout.NORTH, srartbutton, 0, SpringLayout.NORTH, btnNewsaveSettings);
-		springLayout.putConstraint(SpringLayout.EAST, srartbutton, -6, SpringLayout.WEST, btnNewsaveSettings);
-		springLayout.putConstraint(SpringLayout.WEST, btnNewsaveSettings, 532, SpringLayout.WEST,
-				frame.getContentPane());
+		springLayout.putConstraint(SpringLayout.WEST, btnNewsaveSettings, 6, SpringLayout.EAST, srartbutton);
 		springLayout.putConstraint(SpringLayout.SOUTH, btnNewsaveSettings, -10, SpringLayout.SOUTH,
 				frame.getContentPane());
-		springLayout.putConstraint(SpringLayout.EAST, btnNewsaveSettings, -34, SpringLayout.EAST,
+		springLayout.putConstraint(SpringLayout.EAST, btnNewsaveSettings, -247, SpringLayout.EAST,
 				frame.getContentPane());
+		JLabel AirshipOrderText = new JLabel("極速賽車下單順序");
 		frame.getContentPane().add(btnNewsaveSettings);
 		btnNewsaveSettings.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent e) {
@@ -193,34 +191,10 @@ public class gatherinformation {
 		frame.getContentPane().add(readPathText);
 		readPathText.setColumns(10);
 
-		JButton button = new JButton("預設");
-		springLayout.putConstraint(SpringLayout.NORTH, button, 0, SpringLayout.NORTH, srartbutton);
-		frame.getContentPane().add(button);
-
-		button.addActionListener(new ActionListener() {
-			public void actionPerformed(ActionEvent e) {
-				try {
-
-					readPathText.setText("D:/LuckeyAirship/20200225.txt");
-					delaySecondsText.setText("40");
-					strategyNameText.setText("彩票A計畫");
-					luckyAirshipOrderAmount.setText("10,20,40,80,160,320,650,1310");
-					carOrderAmount.setText("10,20,40,80,160,320,650,1310");
-					stegosaurusBitMony.setText("10,20,40");
-					stegosaurusDoubletext.setText("2");
-					LINEGoldenKey.setText("3icAXIGgf2a6FdtX6h8bbWAl5Q3EY9lZBdS69Ki8mi4");
-					googleDriverPath.setText("C:/Users/admin/Desktop/chromedriver.exe");
-
-				} catch (Exception e1) {
-
-				}
-			}
-		});
-
-		JButton saveSettings = new JButton("我叫做讓程式立即吃這設定");
-		springLayout.putConstraint(SpringLayout.EAST, button, -6, SpringLayout.WEST, saveSettings);
+		JButton saveSettings = new JButton("保存所有設定");
+		springLayout.putConstraint(SpringLayout.EAST, saveSettings, -442, SpringLayout.EAST, frame.getContentPane());
+		springLayout.putConstraint(SpringLayout.WEST, srartbutton, 6, SpringLayout.EAST, saveSettings);
 		springLayout.putConstraint(SpringLayout.NORTH, saveSettings, 0, SpringLayout.NORTH, srartbutton);
-		springLayout.putConstraint(SpringLayout.EAST, saveSettings, -6, SpringLayout.WEST, srartbutton);
 		frame.getContentPane().add(saveSettings);
 		frame.getContentPane().add(delaySecondsText);
 		delaySecondsText.setColumns(10);
@@ -272,13 +246,13 @@ public class gatherinformation {
 
 		checkAccount = new JTextField();
 		springLayout.putConstraint(SpringLayout.NORTH, checkAccount, 7, SpringLayout.NORTH, frame.getContentPane());
-		springLayout.putConstraint(SpringLayout.EAST, checkAccount, -314, SpringLayout.EAST, btnNewsaveSettings);
 		frame.getContentPane().add(checkAccount);
 		checkAccount.setColumns(10);
 
 		JLabel label_5 = new JLabel("運行帳號");
+		springLayout.putConstraint(SpringLayout.EAST, label_5, -452, SpringLayout.EAST, frame.getContentPane());
+		springLayout.putConstraint(SpringLayout.WEST, checkAccount, 6, SpringLayout.EAST, label_5);
 		springLayout.putConstraint(SpringLayout.NORTH, label_5, 3, SpringLayout.NORTH, checkAccount);
-		springLayout.putConstraint(SpringLayout.EAST, label_5, -6, SpringLayout.WEST, checkAccount);
 		frame.getContentPane().add(label_5);
 
 		springLayout.putConstraint(SpringLayout.NORTH, speedRacingCheckBox, 0, SpringLayout.NORTH,
@@ -319,7 +293,7 @@ public class gatherinformation {
 
 		textField = new JTextField();
 		springLayout.putConstraint(SpringLayout.WEST, textField, 6, SpringLayout.EAST, label_4);
-		springLayout.putConstraint(SpringLayout.EAST, textField, 0, SpringLayout.EAST, btnNewsaveSettings);
+		springLayout.putConstraint(SpringLayout.EAST, textField, -34, SpringLayout.EAST, frame.getContentPane());
 		textField.setColumns(10);
 		frame.getContentPane().add(textField);
 
@@ -336,22 +310,22 @@ public class gatherinformation {
 		stegosaurusBitMony = new JTextField();
 		springLayout.putConstraint(SpringLayout.NORTH, stegosaurusBitMony, 170, SpringLayout.NORTH,
 				frame.getContentPane());
+		springLayout.putConstraint(SpringLayout.WEST, stegosaurusBitMony, 6, SpringLayout.EAST, lblNewLabel_1);
 		springLayout.putConstraint(SpringLayout.SOUTH, textField, -18, SpringLayout.NORTH, stegosaurusBitMony);
-		springLayout.putConstraint(SpringLayout.WEST, stegosaurusBitMony, 0, SpringLayout.WEST, textField);
-		springLayout.putConstraint(SpringLayout.EAST, stegosaurusBitMony, -112, SpringLayout.EAST, btnNewsaveSettings);
 		stegosaurusBitMony.setColumns(10);
 		frame.getContentPane().add(stegosaurusBitMony);
 
 		JLabel label_8 = new JLabel("掛加碼幾倍");
+		springLayout.putConstraint(SpringLayout.WEST, label_8, 735, SpringLayout.WEST, frame.getContentPane());
+		springLayout.putConstraint(SpringLayout.EAST, stegosaurusBitMony, -6, SpringLayout.WEST, label_8);
 		springLayout.putConstraint(SpringLayout.NORTH, label_8, 0, SpringLayout.NORTH, AirshipOrderText);
-		springLayout.putConstraint(SpringLayout.WEST, label_8, 6, SpringLayout.EAST, stegosaurusBitMony);
 		frame.getContentPane().add(label_8);
 
 		stegosaurusDoubletext = new JTextField();
 		springLayout.putConstraint(SpringLayout.NORTH, stegosaurusDoubletext, -3, SpringLayout.NORTH, AirshipOrderText);
-		springLayout.putConstraint(SpringLayout.WEST, stegosaurusDoubletext, -71, SpringLayout.EAST,
+		springLayout.putConstraint(SpringLayout.WEST, stegosaurusDoubletext, 9, SpringLayout.EAST, label_8);
+		springLayout.putConstraint(SpringLayout.EAST, stegosaurusDoubletext, -34, SpringLayout.EAST,
 				frame.getContentPane());
-		springLayout.putConstraint(SpringLayout.EAST, stegosaurusDoubletext, 0, SpringLayout.EAST, btnNewsaveSettings);
 		frame.getContentPane().add(stegosaurusDoubletext);
 		stegosaurusDoubletext.setColumns(10);
 
@@ -361,8 +335,9 @@ public class gatherinformation {
 		frame.getContentPane().add(label_9);
 
 		JLabel label_11 = new JLabel("運行密碼");
+		springLayout.putConstraint(SpringLayout.WEST, label_11, 532, SpringLayout.WEST, frame.getContentPane());
+		springLayout.putConstraint(SpringLayout.EAST, checkAccount, -5, SpringLayout.WEST, label_11);
 		springLayout.putConstraint(SpringLayout.NORTH, label_11, 3, SpringLayout.NORTH, checkAccount);
-		springLayout.putConstraint(SpringLayout.WEST, label_11, 0, SpringLayout.WEST, btnNewsaveSettings);
 		frame.getContentPane().add(label_11);
 
 		passwordField = new JPasswordField();
@@ -372,7 +347,8 @@ public class gatherinformation {
 		frame.getContentPane().add(passwordField);
 
 		JButton doubleButton = new JButton("劍龍兩倍加碼");
-		springLayout.putConstraint(SpringLayout.WEST, doubleButton, 0, SpringLayout.WEST, readPathText);
+		springLayout.putConstraint(SpringLayout.NORTH, doubleButton, 6, SpringLayout.SOUTH, label_9);
+		springLayout.putConstraint(SpringLayout.EAST, doubleButton, 0, SpringLayout.EAST, label);
 		frame.getContentPane().add(doubleButton);
 
 		doubleButton.addActionListener(new ActionListener() {
@@ -388,7 +364,7 @@ public class gatherinformation {
 
 		JButton quadrupling = new JButton("劍龍四倍加碼");
 		springLayout.putConstraint(SpringLayout.NORTH, quadrupling, 6, SpringLayout.SOUTH, doubleButton);
-		springLayout.putConstraint(SpringLayout.WEST, quadrupling, 0, SpringLayout.WEST, readPathText);
+		springLayout.putConstraint(SpringLayout.EAST, quadrupling, 0, SpringLayout.EAST, label);
 		frame.getContentPane().add(quadrupling);
 
 		quadrupling.addActionListener(new ActionListener() {
@@ -404,7 +380,7 @@ public class gatherinformation {
 
 		JButton eightTimesPlus = new JButton("劍龍八倍加碼");
 		springLayout.putConstraint(SpringLayout.NORTH, eightTimesPlus, 6, SpringLayout.SOUTH, quadrupling);
-		springLayout.putConstraint(SpringLayout.EAST, eightTimesPlus, 0, SpringLayout.EAST, doubleButton);
+		springLayout.putConstraint(SpringLayout.EAST, eightTimesPlus, 0, SpringLayout.EAST, label);
 		frame.getContentPane().add(eightTimesPlus);
 
 		eightTimesPlus.addActionListener(new ActionListener() {
@@ -436,15 +412,13 @@ public class gatherinformation {
 
 		JButton startBet = new JButton("(掛之後)開始下單");
 		springLayout.putConstraint(SpringLayout.NORTH, startBet, 6, SpringLayout.NORTH, frame.getContentPane());
-		springLayout.putConstraint(SpringLayout.WEST, checkAccount, 99, SpringLayout.EAST, startBet);
 		springLayout.putConstraint(SpringLayout.WEST, startBet, 6, SpringLayout.EAST, pauseButton);
 		frame.getContentPane().add(startBet);
 
 		JButton clearOverweightStatus = new JButton("清除加碼狀態");
-		springLayout.putConstraint(SpringLayout.NORTH, clearOverweightStatus, 30, SpringLayout.SOUTH, eightTimesPlus);
-		springLayout.putConstraint(SpringLayout.WEST, clearOverweightStatus, 0, SpringLayout.WEST, readPathText);
-		springLayout.putConstraint(SpringLayout.EAST, clearOverweightStatus, 8, SpringLayout.EAST,
-				luckyAirshipCheckBox);
+		springLayout.putConstraint(SpringLayout.NORTH, clearOverweightStatus, 6, SpringLayout.SOUTH, eightTimesPlus);
+		springLayout.putConstraint(SpringLayout.WEST, clearOverweightStatus, -9, SpringLayout.WEST, label_3);
+		springLayout.putConstraint(SpringLayout.EAST, clearOverweightStatus, 0, SpringLayout.EAST, label);
 		frame.getContentPane().add(clearOverweightStatus);
 
 		JCheckBox isDemoRunCheckBox = new JCheckBox("模擬倉運行");
@@ -460,8 +434,8 @@ public class gatherinformation {
 
 		LINEGoldenKey = new JTextField();
 		springLayout.putConstraint(SpringLayout.NORTH, LINEGoldenKey, -3, SpringLayout.NORTH, label);
-		springLayout.putConstraint(SpringLayout.WEST, LINEGoldenKey, 0, SpringLayout.WEST, btnNewsaveSettings);
-		springLayout.putConstraint(SpringLayout.EAST, LINEGoldenKey, -54, SpringLayout.EAST, btnNewsaveSettings);
+		springLayout.putConstraint(SpringLayout.WEST, LINEGoldenKey, 6, SpringLayout.EAST, lblLine);
+		springLayout.putConstraint(SpringLayout.EAST, LINEGoldenKey, -88, SpringLayout.EAST, frame.getContentPane());
 		frame.getContentPane().add(LINEGoldenKey);
 		LINEGoldenKey.setColumns(10);
 
@@ -522,7 +496,7 @@ public class gatherinformation {
 
 		JButton browserDriver = new JButton("瀏覽路徑");
 		springLayout.putConstraint(SpringLayout.NORTH, browserDriver, -1, SpringLayout.NORTH, strategyNameText);
-		springLayout.putConstraint(SpringLayout.EAST, browserDriver, 0, SpringLayout.EAST, btnNewsaveSettings);
+		springLayout.putConstraint(SpringLayout.EAST, browserDriver, -34, SpringLayout.EAST, frame.getContentPane());
 		frame.getContentPane().add(browserDriver);
 
 		browserDriver.addActionListener(new ActionListener() {
@@ -540,59 +514,94 @@ public class gatherinformation {
 			}
 		});
 
-		JCheckBox chckbxNewCheckBox_1 = new JCheckBox("執行冠軍策略");
-		chckbxNewCheckBox_1.setSelected(true);
-		springLayout.putConstraint(SpringLayout.NORTH, doubleButton, 6, SpringLayout.SOUTH, chckbxNewCheckBox_1);
+		JCheckBox chckbxNewCheckBox_1 = new JCheckBox("執行冠軍");
 		springLayout.putConstraint(SpringLayout.NORTH, chckbxNewCheckBox_1, -4, SpringLayout.NORTH, label_9);
-		springLayout.putConstraint(SpringLayout.EAST, chckbxNewCheckBox_1, 0, SpringLayout.EAST, luckyAirshipCheckBox);
+		springLayout.putConstraint(SpringLayout.WEST, chckbxNewCheckBox_1, 35, SpringLayout.EAST, label_9);
 		frame.getContentPane().add(chckbxNewCheckBox_1);
 
-		JCheckBox checkBox_1 = new JCheckBox("執行亞軍策略");
-		springLayout.putConstraint(SpringLayout.NORTH, checkBox_1, 0, SpringLayout.NORTH, chckbxNewCheckBox_1);
-		springLayout.putConstraint(SpringLayout.WEST, checkBox_1, 30, SpringLayout.EAST, chckbxNewCheckBox_1);
+		JCheckBox checkBox_1 = new JCheckBox("執行亞軍");
+		springLayout.putConstraint(SpringLayout.WEST, checkBox_1, 229, SpringLayout.WEST, frame.getContentPane());
+		springLayout.putConstraint(SpringLayout.EAST, checkBox_1, -573, SpringLayout.EAST, frame.getContentPane());
+		springLayout.putConstraint(SpringLayout.EAST, chckbxNewCheckBox_1, -1, SpringLayout.WEST, checkBox_1);
+		springLayout.putConstraint(SpringLayout.NORTH, checkBox_1, -4, SpringLayout.NORTH, label_9);
 		frame.getContentPane().add(checkBox_1);
-
-		JButton doubleButton_1 = new JButton("劍龍兩倍加碼");
-		springLayout.putConstraint(SpringLayout.NORTH, doubleButton_1, 0, SpringLayout.NORTH, doubleButton);
-		springLayout.putConstraint(SpringLayout.WEST, doubleButton_1, 0, SpringLayout.WEST, checkBox_1);
-		frame.getContentPane().add(doubleButton_1);
-
-		JButton quadrupling_1 = new JButton("劍龍四倍加碼");
-		springLayout.putConstraint(SpringLayout.NORTH, quadrupling_1, 0, SpringLayout.NORTH, quadrupling);
-		springLayout.putConstraint(SpringLayout.WEST, quadrupling_1, 0, SpringLayout.WEST, checkBox_1);
-		frame.getContentPane().add(quadrupling_1);
-
-		JButton eightTimesPlus_1 = new JButton("劍龍八倍加碼");
-		springLayout.putConstraint(SpringLayout.WEST, eightTimesPlus_1, 0, SpringLayout.WEST, checkBox_1);
-		springLayout.putConstraint(SpringLayout.SOUTH, eightTimesPlus_1, 0, SpringLayout.SOUTH, eightTimesPlus);
-		frame.getContentPane().add(eightTimesPlus_1);
 
 		JCheckBox checkBox_2 = new JCheckBox("執行第三名");
 		springLayout.putConstraint(SpringLayout.NORTH, checkBox_2, -4, SpringLayout.NORTH, label_9);
-		springLayout.putConstraint(SpringLayout.WEST, checkBox_2, 33, SpringLayout.EAST, checkBox_1);
+		springLayout.putConstraint(SpringLayout.WEST, checkBox_2, 6, SpringLayout.EAST, checkBox_1);
+		springLayout.putConstraint(SpringLayout.EAST, checkBox_2, -482, SpringLayout.EAST, frame.getContentPane());
 		frame.getContentPane().add(checkBox_2);
 
-		JButton doubleButton_1_1 = new JButton("劍龍兩倍加碼");
-		springLayout.putConstraint(SpringLayout.NORTH, doubleButton_1_1, 0, SpringLayout.NORTH, doubleButton);
-		springLayout.putConstraint(SpringLayout.WEST, doubleButton_1_1, 0, SpringLayout.WEST, label_5);
-		frame.getContentPane().add(doubleButton_1_1);
-
-		JButton quadrupling_1_1 = new JButton("劍龍四倍加碼");
-		springLayout.putConstraint(SpringLayout.WEST, quadrupling_1_1, 0, SpringLayout.WEST, label_5);
-		springLayout.putConstraint(SpringLayout.SOUTH, quadrupling_1_1, 0, SpringLayout.SOUTH, quadrupling);
-		frame.getContentPane().add(quadrupling_1_1);
-
-		JButton eightTimesPlus_1_1 = new JButton("劍龍八倍加碼");
-		springLayout.putConstraint(SpringLayout.SOUTH, eightTimesPlus_1_1, 0, SpringLayout.SOUTH, eightTimesPlus);
-		springLayout.putConstraint(SpringLayout.EAST, eightTimesPlus_1_1, 0, SpringLayout.EAST, doubleButton_1_1);
-		frame.getContentPane().add(eightTimesPlus_1_1);
-
 		JCheckBox stegosaurusAutomaticRenewalCheckBox = new JCheckBox("劍龍自動續單");
-		stegosaurusAutomaticRenewalCheckBox.setSelected(true);
-		springLayout.putConstraint(SpringLayout.NORTH, stegosaurusAutomaticRenewalCheckBox, 0, SpringLayout.NORTH,
-				doubleButton);
-		springLayout.putConstraint(SpringLayout.EAST, stegosaurusAutomaticRenewalCheckBox, 0, SpringLayout.EAST, label);
+		springLayout.putConstraint(SpringLayout.NORTH, stegosaurusAutomaticRenewalCheckBox, 6, SpringLayout.SOUTH,
+				clearOverweightStatus);
+		springLayout.putConstraint(SpringLayout.WEST, stegosaurusAutomaticRenewalCheckBox, 0, SpringLayout.WEST, label);
 		frame.getContentPane().add(stegosaurusAutomaticRenewalCheckBox);
+
+		JCheckBox checkBox = new JCheckBox("執行第四名");
+		springLayout.putConstraint(SpringLayout.NORTH, checkBox, -4, SpringLayout.NORTH, label_9);
+		springLayout.putConstraint(SpringLayout.WEST, checkBox, 5, SpringLayout.EAST, checkBox_2);
+		springLayout.putConstraint(SpringLayout.EAST, checkBox, -392, SpringLayout.EAST, frame.getContentPane());
+		frame.getContentPane().add(checkBox);
+
+		JCheckBox checkBox_3 = new JCheckBox("執行第五名");
+		springLayout.putConstraint(SpringLayout.NORTH, checkBox_3, -4, SpringLayout.NORTH, label_9);
+		springLayout.putConstraint(SpringLayout.WEST, checkBox_3, 6, SpringLayout.EAST, checkBox);
+		springLayout.putConstraint(SpringLayout.EAST, checkBox_3, -6, SpringLayout.EAST, label_11);
+		frame.getContentPane().add(checkBox_3);
+
+		JCheckBox checkBox_4 = new JCheckBox("第六名");
+		springLayout.putConstraint(SpringLayout.NORTH, checkBox_4, 0, SpringLayout.NORTH, doubleButton);
+		springLayout.putConstraint(SpringLayout.WEST, checkBox_4, 35, SpringLayout.EAST, doubleButton);
+		frame.getContentPane().add(checkBox_4);
+
+		JCheckBox checkBox_5 = new JCheckBox("第七名");
+		springLayout.putConstraint(SpringLayout.EAST, checkBox_4, 0, SpringLayout.WEST, checkBox_5);
+		springLayout.putConstraint(SpringLayout.WEST, checkBox_5, 240, SpringLayout.WEST, frame.getContentPane());
+		springLayout.putConstraint(SpringLayout.EAST, checkBox_5, 0, SpringLayout.EAST, readPathText);
+		springLayout.putConstraint(SpringLayout.NORTH, checkBox_5, 0, SpringLayout.NORTH, doubleButton);
+		frame.getContentPane().add(checkBox_5);
+
+		JCheckBox checkBox_6 = new JCheckBox("第八名");
+		springLayout.putConstraint(SpringLayout.NORTH, checkBox_6, 0, SpringLayout.NORTH, doubleButton);
+		springLayout.putConstraint(SpringLayout.WEST, checkBox_6, 0, SpringLayout.WEST, saveSettings);
+		springLayout.putConstraint(SpringLayout.EAST, checkBox_6, -20, SpringLayout.EAST, saveSettings);
+		frame.getContentPane().add(checkBox_6);
+
+		JCheckBox checkBox_7 = new JCheckBox("第九名");
+		springLayout.putConstraint(SpringLayout.NORTH, checkBox_7, 0, SpringLayout.NORTH, doubleButton);
+		springLayout.putConstraint(SpringLayout.WEST, checkBox_7, 4, SpringLayout.EAST, checkBox_6);
+		springLayout.putConstraint(SpringLayout.EAST, checkBox_7, 91, SpringLayout.EAST, checkBox_6);
+		frame.getContentPane().add(checkBox_7);
+
+		JCheckBox checkBox_8 = new JCheckBox("第十名");
+		springLayout.putConstraint(SpringLayout.NORTH, checkBox_8, 0, SpringLayout.NORTH, doubleButton);
+		springLayout.putConstraint(SpringLayout.WEST, checkBox_8, 6, SpringLayout.EAST, checkBox_7);
+		springLayout.putConstraint(SpringLayout.EAST, checkBox_8, -280, SpringLayout.EAST, frame.getContentPane());
+		frame.getContentPane().add(checkBox_8);
+
+		JButton readConfigurationFile = new JButton("讀取設定檔案");
+		springLayout.putConstraint(SpringLayout.NORTH, readConfigurationFile, 0, SpringLayout.NORTH, srartbutton);
+		springLayout.putConstraint(SpringLayout.EAST, readConfigurationFile, -6, SpringLayout.WEST, saveSettings);
+		frame.getContentPane().add(readConfigurationFile);
+		readConfigurationFile.addActionListener(new ActionListener() {
+			public void actionPerformed(ActionEvent ae) {
+				JFileChooser fileChooser = new JFileChooser();// 宣告filechooser
+				int returnValue = fileChooser.showOpenDialog(null);// 叫出filechooser
+				if (returnValue == JFileChooser.APPROVE_OPTION) // 判斷是否選擇檔案
+				{
+					File selectedFile = fileChooser.getSelectedFile();// 指派給File
+					System.out.println(selectedFile.getPath()); // 印出檔名
+					String path = selectedFile.getPath();
+					path = path.replaceAll("\\\\", "\\/");
+					try {
+						getPropValues(path);
+					} catch (IOException e) {
+						System.out.println("讀取檔案出現錯誤:" + e);
+					}
+				}
+			}
+		});
 
 		saveSettings.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent e) {
@@ -633,13 +642,13 @@ public class gatherinformation {
 	}
 
 	public static String getPropValues(String propetersPath) throws IOException {
-		InputStream inputStream = null;
+		InputStreamReader inputStream = null;
 		String result = "";
 		try {
 			Properties prop = new Properties();
-			String propFileName = "config.properties";
+			String propFileName = "config.txt";
 
-			inputStream = new FileInputStream(propetersPath);
+			inputStream = new InputStreamReader(new FileInputStream(propetersPath), "UTF-8");
 
 			if (inputStream != null) {
 				prop.load(inputStream);
@@ -649,15 +658,15 @@ public class gatherinformation {
 
 			Date time = new Date(System.currentTimeMillis());
 			readPathText.setText(prop.getProperty("readPathText"));
-			delaySecondsText.setText(prop.getProperty("readPathText"));
-			strategyNameText.setText(prop.getProperty("readPathText"));
-			luckyAirshipOrderAmount.setText(prop.getProperty("readPathText"));
-			carOrderAmount.setText(prop.getProperty("readPathText"));
-			stegosaurusBitMony.setText(prop.getProperty("readPathText"));
-			stegosaurusDoubletext.setText(prop.getProperty("readPathText"));
-			LINEGoldenKey.setText(prop.getProperty("readPathText"));
-			googleDriverPath.setText(prop.getProperty("readPathText"));
-			
+			delaySecondsText.setText(prop.getProperty("delaySecondsText"));
+			strategyNameText.setText(prop.getProperty("strategyNameText"));
+			luckyAirshipOrderAmount.setText(prop.getProperty("luckyAirshipOrderAmount"));
+			carOrderAmount.setText(prop.getProperty("carOrderAmount"));
+			stegosaurusBitMony.setText(prop.getProperty("stegosaurusBitMony"));
+			stegosaurusDoubletext.setText(prop.getProperty("stegosaurusDoubletext"));
+			LINEGoldenKey.setText(prop.getProperty("LINEGoldenKey"));
+			googleDriverPath.setText(prop.getProperty("googleDriverPath"));
+
 			result = "";
 		} catch (Exception e) {
 			System.out.println("Exception: " + e);
@@ -666,5 +675,4 @@ public class gatherinformation {
 		}
 		return result;
 	}
-
 }
