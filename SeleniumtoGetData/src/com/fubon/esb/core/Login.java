@@ -191,6 +191,11 @@ public class Login {
 						String[] timelist = time.split(":");
 						String realtime = timelist[1];
 
+
+						// 官方網大小單雙
+						if (!WhetherSeal.equals("已封盤") && sizeSingleAndDoubleCheckbox == true) {
+							BigSmall.RunBigSmall(webObj);
+						}
 						if (Integer.valueOf(realtime) % 5 == 0 || isForceRun) {
 
 							try {
@@ -202,11 +207,10 @@ public class Login {
 									// 這裡直行友道的策略
 									youdaoStrategy(readPath);
 								}
+								
+								
+								
 
-								// 官方網大小單雙
-								if (!WhetherSeal.equals("已封盤") && sizeSingleAndDoubleCheckbox == true) {
-
-								}
 
 								// 執行劍龍的策略
 								if (!WhetherSeal.equals("已封盤") && strategySwitch.get("stegosaurusCheckBoxValue") == true
